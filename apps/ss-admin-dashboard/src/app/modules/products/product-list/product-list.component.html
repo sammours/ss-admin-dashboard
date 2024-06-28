@@ -1,0 +1,118 @@
+<div class="relative md:my-3 md:mx-5">
+    <ad-ui-breadcrumb [breadcrumbs]="breadcrumbs" header="Product overview"></ad-ui-breadcrumb>
+
+    <h1 class="mb-4 text-gray-200 text-4xl">Products overview</h1>
+    <div class="h-10 mt-1 md:inline-flex sm:flex max-sm:mb-4">
+        <span (click)="onAvailableClicked()"
+            class="text-gray-100 text-md inline-flex cursor-pointer items-center px-2.5 py-0.5 rounded me-2 border border-gray-500 hover:bg-gray-900 max-sm:mb-1"
+            [ngClass]="{'bg-gray-700': !isFieldActive('available'), 'bg-gray-900': isFieldActive('available')}">
+            <span class="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
+            Available only
+        </span>
+        <span (click)="onDiscountOnlyClicked()"
+            class="text-gray-100 text-md inline-flex cursor-pointer items-center px-2.5 py-0.5 rounded me-2 border border-gray-500 hover:bg-gray-900 max-sm:mb-1"
+            [ngClass]="{'bg-gray-700': !isFieldActive('discount'), 'bg-gray-900': isFieldActive('discount')}">
+            <span class="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
+            Discount only
+        </span>
+    </div>
+    <div class="lg:w-4/12 max-md:w-full max-md:mt-5 float-right">
+        <label for="simple-filter" class="sr-only">Filter</label>
+        <div class="relative w-full">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <ad-ui-icon icon="search" color="gray" size="l" />
+            </div>
+            <input type="text" id="simple-filter" (input)="onFilterChanged($event.target.value)"
+                class="bg-gray-700 border border-gray-600 text-gray-200 rounded-lg w-full ps-10 p-2.5 focus:outline-none"
+                placeholder="filter " required />
+        </div>
+    </div>
+</div>
+
+<div class="relative md:my-3 md:mx-5">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-400 uppercase bg-gray-700">
+            <tr>
+                <th scope="col" class="px-16 py-3">
+                    <span class="sr-only">Image</span>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Product
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Qty
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Price
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    rating
+                </th>
+                <th scope="col" class="px-6 py-3">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b bg-gray-800 border-gray-700" *ngFor="let product of result.items">
+                <td class="p-4">
+                    <img [src]="product.images[0]"
+                        class="w-16 rounded-lg md:w-32 max-w-full max-h-full border-2 border-gray-600 cursor-pointer"
+                        [alt]="product.name" (click)="onProductSelected(product)" />
+                </td>
+                <td class="px-3 py-4 font-semibold text-gray-900 dark:text-white">
+                    <div class="ps-3 flex flex-col gap-1">
+                        <div class="text-base font-semibold" innerHTML="{{ product.name | highlight: term }}">
+                        </div>
+                        <div>
+                            <span class="bg-gray-700 text-gray-300 text-xs font-medium me-2 px-2.5 py-0.5 rounded"> {{
+                            product.category }}</span>
+                            </div>
+                        <div class="font-normal text-gray-500"
+                            innerHTML="{{ product.description | truncate: 80 | highlight: term }}"></div>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <div class="text-base font-semibold">{{ product.amount }}</div>
+                    </div>
+                </td>
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"
+                    [innerHTML]="getProductPrice(product)"></td>
+                <td class="px-6 py-4">
+                    <ad-ui-icon icon="star" size="l" [color]="product.rating >= 1 ? 'gold' : 'gray'" />
+                    <ad-ui-icon icon="star" size="l" [color]="product.rating >= 2 ? 'gold' : 'gray'" />
+                    <ad-ui-icon icon="star" size="l" [color]="product.rating >= 3 ? 'gold' : 'gray'" />
+                    <ad-ui-icon icon="star" size="l" [color]="product.rating >= 4 ? 'gold' : 'gray'" />
+                    <ad-ui-icon icon="star" size="l" [color]="product.rating >= 5 ? 'gold' : 'gray'" />
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex gap-2 items-center">
+                        <ad-ui-icon class="cursor-pointer" size="l" color="gray" icon="edit" (click)="onEditClicked(product.id)" />
+                        <ad-ui-icon class="cursor-pointer" size="l" color="gray" icon="delete" (click)="onEditClicked(product.id)" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="flex items-center w-full justify-evenly">
+    <ad-ui-paginator [currentPage]="filter.skip / filter.take" [length]="result.totalCount"
+        (page)="onPageChanged($event)"></ad-ui-paginator>
+</div>
+
+<ad-ui-dialog *ngIf="openDialog" (closeDialog)="onDialogClosed()">
+    <dialog-header>{{ selectedProduct.name }}</dialog-header>
+    <dialog-body>
+        <div class="flex items-center">
+            <div class="flex-[2_2_0%] flex-1">
+                <img [src]="activeImage" class="rounded-md border-2 border-gray-600" />
+            </div>
+            <div class="flex-1 flex flex-col gap-1 max-h-[26rem] overflow-y-auto items-center cursor-pointer">
+                <img *ngFor="let image of selectedProduct.images" [src]="image"
+                    class="rounded-md border-2 border-gray-600 w-44" (click)="activeImage = image" />
+            </div>
+        </div>
+    </dialog-body>
+</ad-ui-dialog>

@@ -1,0 +1,43 @@
+<div class="relative md:my-3 md:mx-5">
+    <ad-ui-breadcrumb [breadcrumbs]="breadcrumbs" header="Product edit"></ad-ui-breadcrumb>
+
+    <h1 class="mb-4 text-gray-200 text-4xl">Products overview</h1>
+    <div class="flex max-sm:flex-col gap-4 no-wrap max-sm:mt-4">
+        <div class="w-full md:w-5/12">
+            <div class="bg-gray-800 p-3 text-white rounded-md ">
+                <div class="flex flex-col gap-4 items-center">
+                    <div class="flex-[2_2_0%] flex-1">
+                        <img [src]="activeImage" class="rounded-md border-2 border-gray-600" />
+                    </div>
+                    <div class="flex-1 flex flex-row gap-4 overflow-y-auto items-center cursor-pointer">
+                        <img *ngFor="let image of product.images" [src]="image"
+                            class="rounded-md border-2 border-gray-600 w-44" (click)="activeImage = image" />
+                    </div>
+
+
+                    <div class="flex items-center justify-center w-full">
+                        <label for="dropzone-file"
+                            class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-600 hover:bg-gray-800">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <ad-ui-icon icon="upload" color="light-blue" size="l" />
+                                <p class="mb-2 text-sm text-gray-400"><span class="font-semibold">Click to upload</span>
+                                    or drag and drop</p>
+                                <p class="text-xs text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                            </div>
+                            <input id="dropzone-file" type="file" class="hidden" />
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full md:w-5/12 md:h-64">
+            <div class="bg-gray-800 text-white p-3 shadow-sm rounded-md">
+                asdasd
+            </div>
+        </div>
+    </div>
+
+
+</div>

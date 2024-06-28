@@ -1,0 +1,101 @@
+<div class="relative md:my-3 md:mx-5">
+    <ad-ui-breadcrumb [breadcrumbs]="breadcrumbs" header="User overview"></ad-ui-breadcrumb>
+
+    <div class="mt-8 flex flex-col gap-4">
+
+        <div class="flex flex-row-reverse">
+            <button type="button"
+                class="py-2.5 px-5 text-sm text-gray-400 bg-gray-800 rounded-lg border border-gray-600 hover:bg-gray-700 hover:text-white">
+                <ad-ui-icon icon="add" color="gray" />
+                Add new user
+            </button>
+        </div>
+
+        <div class="flex flex-col justify-between items-center gap-2 md:flex-row">
+            <div class="">
+                <span (click)="onActiveClicked()"
+                    class="text-gray-100 text-md inline-flex cursor-pointer items-center px-2.5 py-0.5 rounded me-2 border border-gray-500 hover:bg-gray-800 max-sm:mb-1"
+                    [ngClass]="{'bg-gray-700': !isFieldActive('active'), 'bg-gray-800': isFieldActive('active')}">
+                    <span class="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
+                    active users
+                </span>
+                <span (click)="onInactiveClicked()"
+                    class="bg-gray-700 text-gray-100 text-md cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded me-2 border border-gray-500 hover:bg-gray-800 max-sm:mb-1"
+                    [ngClass]="{'bg-gray-700': !isFieldActive('inactive'), 'bg-gray-800': isFieldActive('inactive')}">
+                    <span class="flex w-3 h-3 me-3 bg-gray-200 rounded-full"></span>
+                    inactive users
+                </span>
+                <span (click)="onBlockedClicked()"
+                    class="bg-gray-700 text-gray-100 text-md cursor-pointer inline-flex items-center px-2.5 py-0.5 rounded me-2 border border-gray-500 hover:bg-gray-800 max-sm:mb-1"
+                    [ngClass]="{'bg-gray-700': !isFieldActive('blocked'), 'bg-gray-800': isFieldActive('blocked')}">
+                    <span class="flex w-3 h-3 me-3 bg-red-500 rounded-full"></span>
+                    blocked users
+                </span>
+            </div>
+            <div class="w-full md:w-5/12">
+                <label for="simple-filter" class="sr-only">Filter</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <ad-ui-icon icon="search" color="gray" size="l" />
+                    </div>
+                    <input type="text" id="simple-filter" (input)="onFilterChanged($event.target.value)"
+                        class="bg-gray-700 border border-gray-600 text-gray-200 rounded-lg w-full ps-10 p-2.5 focus:ring-0 focus:border-gray-600"
+                        placeholder="filter " required />
+                </div>
+            </div>
+        </div>
+
+        <div class="relative overflow-x-auto max-sm:w-full shadow-lg">
+            <table class="w-full text-sm text-left text-gray-400">
+                <thead class="text-xs text-gray-400 uppercase bg-gray-700">
+                    <tr>
+                        <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('name')">Name
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon></th>
+                        <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('jobTitle')">Job Title
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon></th>
+                        <th scope="col" class="px-6 py-3">Address</th>
+                        <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('birthDate')">Birth date
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon></th>
+                        <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('registeredAt')">
+                            Registered At
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon>
+                        </th>
+                        <th scope="col" class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of result.items; last" class="border-b bg-gray-800 border-gray-700">
+                        <td scope="row" class="flex items-center px-6 py-4 whitespace-nowrap ">
+                            <img class="w-10 h-10 rounded-full" [src]="user.avatar"
+                                [alt]="UserModelUtil.fullName(user)">
+                            <div class="ps-3">
+                                <div class="flex items-center">
+                                    <span [title]="user.blocked ? 'Blocked' : user.active ? 'Active' : 'Inactive'"
+                                        [class.bg-gray-200]="!user.active && !user.blocked"
+                                        [class.bg-green-500]="user.active && !user.blocked"
+                                        [class.bg-red-500]="user.blocked" class="flex w-3 h-3 me-3 rounded-full"></span>
+                                    <div class="flex items-center text-base font-semibold"
+                                        innerHTML="{{ UserModelUtil.fullName(user) | highlight : term }}"></div>
+                                </div>
+                                <div class="font-normal text-gray-400" innerHTML="{{ user.email | highlight : term }}">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4" innerHTML="{{ user.jobTitle | highlight : term }}"></td>
+                        <td class="px-6 py-4" innerHTML="{{ UserModelUtil.address(user) | highlight : term }}"></td>
+                        <td class="px-6 py-4">{{ user.birthDate | date: 'dd.MM.yyyy'}}</td>
+                        <td class="px-6 py-4">{{ user.registeredAt | date: 'dd.MM.yyyy'}}</td>
+                        <td class="px-6 py-4"><ad-ui-menu [menuItems]="getMenuItem(user.id)"
+                                menuDirection="left"></ad-ui-menu></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flex items-center w-full justify-evenly">
+            <ad-ui-paginator [currentPage]="filter.skip / filter.take" [length]="result.totalCount"
+                (page)="onPageChanged($event)"></ad-ui-paginator>
+        </div>
+
+    </div>
+</div>

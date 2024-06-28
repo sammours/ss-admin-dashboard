@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ss-admin-dashboard/feature": ["libs/feature/src/index.ts"],
+      "@ss-admin-dashboard/ui-common": ["libs/ui-common/src/index.ts"],
+      "@ss-admin-dashboard/util-common": ["libs/util-common/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

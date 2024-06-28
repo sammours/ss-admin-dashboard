@@ -1,0 +1,23 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+    /* Colors */
+    --primary: #fdb157;
+    --primary-dark: #313131;
+    
+    --secondary-light: #f9fafb;
+    
+    --gray: #797373;
+    --gray-50: rgba(121, 115, 115,.5);
+    --gray-70: rgba(25, 25, 25,.7);
+    --white: #ffffff;
+    --black: #191919;
+    --black-50: rgba(25, 25, 25, .5)
+  }
+
+  .highlight {
+    background-color: #fdb157;
+    color: #313131;
+  }

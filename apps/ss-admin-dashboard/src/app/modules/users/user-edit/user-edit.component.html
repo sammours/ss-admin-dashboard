@@ -1,0 +1,125 @@
+<div class="relative md:my-3 md:mx-5">
+    <ad-ui-breadcrumb [breadcrumbs]="breadcrumbs" header="User edit"></ad-ui-breadcrumb>
+
+    <div class="flex max-sm:flex-col gap-4 no-wrap max-sm:mt-4">
+        <div class="w-full md:w-3/12">
+            <div class="bg-gray-800 p-3 text-white rounded-md ">
+                <div class="image overflow-hidden">
+                    <img class="h-auto w-full mx-auto border border-2 border-gray-800" [src]="user.avatar" alt="">
+                </div>
+                <h1 class="font-bold text-xl leading-8 my-1">{{ UserModelUtil.fullName(user) }}</h1>
+                <h3 class="text-gray-300 font-lg text-semibold leading-6">{{ user.jobTitle }}</h3>
+                <h3 class="text-gray-400 font-lg text-semibold leading-6">{{ user.email }}</h3>
+                <ul class="bg-gray-800 text-gray-200 py-2 px-3 mt-3 divide-y divide-gray-800 rounded shadow-sm">
+                    <li class="flex items-center py-3">
+                        <span>Status</span>
+                        <span class="ml-auto">
+                            <span *ngIf="user.active && !user.blocked"
+                                class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span>
+                            <span *ngIf="!user.active && !user.blocked"
+                                class="bg-gray-500 py-1 px-2 rounded text-white text-sm">Inactive</span>
+                            <span *ngIf="user.blocked"
+                                class="bg-red-500 py-1 px-2 rounded text-white text-sm">Blocked</span>
+                        </span>
+                    </li>
+                    <li class="flex items-center py-3">
+                        <span>Registered at</span>
+                        <span class="ml-auto">{{ user.registeredAt | date: 'dd.MM.yyyy'}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="w-full md:w-9/12 md:h-64">
+            <div class="bg-gray-800 text-white p-3 shadow-sm rounded-md">
+                <div class="flex items-center space-x-2 font-semibold leading-8">
+                    <span clas="text-green-500">
+                        <ad-ui-icon icon="user" color="white" />
+                    </span>
+                    <h2 class="tracking-wide">Profile</h2>
+                </div>
+                <hr class="h-px my-4 bg-gray-800 border-0">
+
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <label for="first_name" class="block mb-2 text-sm font-medium">First name</label>
+                        <input [(ngModel)]="user.firstName" type="text" id="first_name"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-2 focus:outline-none {{ validator.isPropertySatisfied('firstName') ? 'border-gray-600' : 'border-red-500' }}"
+                            (blur)="onChanged()" [title]="validator.getErrorMessage('firstName')" />
+                    </div>
+                    <div>
+                        <label for="last_name" class="block mb-2 text-sm font-medium">Last name</label>
+                        <input [(ngModel)]="user.lastName" type="text" id="last_name"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-2 focus:outline-none  {{ validator.isPropertySatisfied('lastName') ? 'border-gray-600' : 'border-red-500' }}"
+                            (blur)="onChanged()" [title]="validator.getErrorMessage('lastName')" />
+                    </div>
+                    <div>
+                        <label for="job_title" class="block mb-2 text-sm font-medium">Job title</label>
+                        <input [(ngModel)]="user.jobTitle" type="text" id="job_title"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-2 focus:outline-none {{ validator.isPropertySatisfied('jobTitle') ? 'border-gray-600' : 'border-red-500' }}"
+                            (blur)="onChanged()" [title]="validator.getErrorMessage('jobTitle')" />
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                        <input [(ngModel)]="user.email" type="text" id="email"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-2 focus:outline-none {{ validator.isPropertySatisfied('email') ? 'border-gray-600' : 'border-red-500' }}"
+                            (blur)="onChanged()" [title]="validator.getErrorMessage('email')" />
+                    </div>
+                    <div>
+                        <label for="birth_date" class="block mb-2 text-sm font-medium">Birth Date</label>
+                        <input [(ngModel)]="user.birthDate" pattern="dd.MM.yyyy" type="date" id="birth_date"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 focus:outline-none" />
+                    </div>
+                </div>
+                <h4> Address </h4>
+                <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+
+                <div class="grid gap-6 mb-6 md:grid-cols-1">
+                    <div>
+                        <label for="street" class="block mb-2 text-sm font-medium">Street</label>
+                        <input [(ngModel)]="user.street" type="text" id="street"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 focus:outline-none" />
+                    </div>
+                </div>
+
+                <div class="grid gap-6 mb-6 md:grid-cols-3">
+                    <div>
+                        <label for="postal_code" class="block mb-2 text-sm font-medium">Postal code</label>
+                        <input [(ngModel)]="user.zipCode" type="text" id="postal_code"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label for="city" class="block mb-2 text-sm font-medium">City</label>
+                        <input [(ngModel)]="user.city" type="text" id="city"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label for="country" class="block mb-2 text-sm font-medium">Country</label>
+                        <input [(ngModel)]="user.country" type="text" id="country"
+                            class="rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 focus:outline-none" />
+                    </div>
+                </div>
+                <div class="grid mb-6 md:grid-cols-1">
+                    <div class="flex gap-2 md:flex-row-reverse items-center flex-col">
+                        <button type="button"
+                            class="float-right font-medium w-48 rounded-lg text-sm px-5 py-2.5 mb-2 bg-green-800 hover:bg-gray-700 border-gray-700 disabled:opacity-50"
+                            [disabled]="!validator.isValid">
+                            <ad-ui-icon icon="save" color="white" />
+                            Save
+                        </button>
+                        <button *ngIf="user.blocked" type="button"
+                            class="float-right font-medium w-48 rounded-lg text-sm px-5 py-2.5 mb-2 bg-gray-800 hover:bg-gray-700 border-gray-700">
+                            <ad-ui-icon icon="unlock" color="white" />
+                            Unblock
+                        </button>
+                        <button *ngIf="!user.blocked" type="button"
+                            class="float-right font-medium w-48 rounded-lg text-sm px-5 py-2.5 mb-2 bg-gray-800 hover:bg-gray-700 border-gray-700">
+                            <ad-ui-icon icon="lock" color="white" />
+                            Block
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

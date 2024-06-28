@@ -1,0 +1,48 @@
+<div class="flex flex-col items-center gap-2">
+  <span class="text-gray-400 text-sm">
+    Showing 
+    (<span class="text-gray-200">{{ (currentPage * pageSize ) + 1 }}</span>) 
+    to
+    (<span class="text-gray-200">{{ ( ( currentPage + 1 ) * pageSize ) }}</span>)
+    of
+    (<span class="text-gray-200">{{ length }}</span>)
+    Entries
+  </span>
+
+  <div class="flex items-center gap-4">
+    <button [disabled]="currentPage === 0" (click)="onPreviousClicked()"
+      class="flex items-center gap-2 px-6 py-1 text-sm font-bold text-center text-gray-400 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-800/10 active:bg-gray-800/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      type="button">
+      <ad-ui-icon icon="arrow-left" color="white" />
+      Previous
+    </button>
+    <div class="flex items-center gap-2 max-sm:hidden">
+      <button *ngFor="let page of pages" (click)="onPageChanged(page)" class=""
+        [class]="currentPage === page
+      ? 'relative h-8 w-8 select-none rounded-lg bg-gray-800 text-center align-middle text-sm text-white shadow-md shadow-gray-800/10 transition-all hover:shadow-lg hover:shadow-gray-800/20 focus:shadow-none active:opacity-[0.85] active:shadow-none'
+      : 'relative h-8 w-8 select-none rounded-lg text-center align-middle text-gray-400  text-sm transition-all hover:bg-gray-800/10 active:bg-gray-800/20'"
+        type="button">
+        <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+          {{ page + 1 }}
+        </span>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-2 sm:hidden">
+      <button
+        class="relative h-8  w-8 select-none rounded-lg bg-gray-800 text-center align-middle text-sm text-white shadow-md shadow-gray-800/10 transition-all hover:shadow-lg hover:shadow-gray-800/20 focus:shadow-none active:opacity-[0.85] active:shadow-none"
+        disabled type="button">
+        <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+          {{ currentPage + 1 }}
+        </span>
+      </button>
+    </div>
+    
+    <button (click)="onNextClicked()" [disabled]="currentPage === totalPageCount - 1"
+      class="flex items-center gap-2 px-6 py-1 text-sm font-bold text-center text-gray-400 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-800/10 active:bg-gray-800/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      type="button">
+      Next
+      <ad-ui-icon icon="arrow-right" color="white" />
+    </button>
+  </div>
+</div>

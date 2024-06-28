@@ -1,0 +1,27 @@
+<div>
+  <button type="button" class="flex bg-gray rounded-full focus:ring-4 focus:ring-gray md:me-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+  data-dropdown-offset-distance="20" data-dropdown-offset-skidding="-80" data-dropdown-placement="bottom">
+    <span class="sr-only">Open user menu</span>
+    <img class="w-8 h-8 rounded-full" [src]="imageSrc" alt="user photo" />
+  </button>
+</div>
+
+<div
+  class="z-50 hidden my-6 text-base list-none divide-y rounded-lg shadow bg-gray-800 divide-gray-600" id="user-dropdown">
+  <div class="px-4 py-3">
+    <p class="block text-sm text-white">
+      {{ header }}
+    </p>
+    <p class="block text-sm text-white text-gray-500 truncate">
+      {{ headerDescription }}
+    </p>
+  </div>
+  <ul class="py-2" aria-labelledby="user-menu-button">
+    <li *ngFor="let item of menuItems">
+      <a routerLink="{{ item.link }}" class="block px-4 py-2 text-sm text-white text-gray-200 hover:bg-gray-600 hover:cursor-pointer hover:text-white"
+        role="menuitem">
+        {{ item.text }}
+      </a>
+    </li>
+  </ul>
+</div>
