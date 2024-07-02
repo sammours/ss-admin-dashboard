@@ -1,0 +1,74 @@
+<div class="relative">
+    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <ad-ui-icon icon="search" color="light-blue" />
+    </div>
+    <input type="search" class="block w-full py-2 ps-10 text-sm text-gray-200 border border-gray-600 rounded-lg bg-gray-700 placeholder-gray-400" placeholder="search" (input)="onTermChanged($event.target.value)" />
+</div>
+
+<button type="button"
+    class="flex items-start justify-between w-full p-2 text-base text-gray-400 transition duration-75 rounded-lg group"
+    aria-controls="category-dropdown" data-collapse-toggle="category-dropdown">
+    <span class="whitespace-nowrap">Categories</span>
+    <ad-ui-icon icon="chevron-down" color="gray" size="l"></ad-ui-icon>
+</button>
+
+<div class="p-2 space-y-2" id="category-dropdown">
+    <ul>
+        <ng-container *ngFor="let category of allCategories; let i = index">
+            <li *ngIf="category.display">
+                <div class="mb-4">
+                    <input [id]="'checkbox-' + i" type="checkbox" [checked]="category.selected"
+                        (change)="onCategorySelected(category)"
+                        class="w-4 h-4 text-gray-600 bg-gray-700 border-gray-600 rounded focus:ring-0 focus:outline-none hover:cursor-pointer">
+                    <label [for]="'checkbox-' + i"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 hover:cursor-pointer">{{
+                        category.item }}</label>
+                </div>
+            </li>
+        </ng-container>
+    </ul>
+    <span class="hover:cursor-pointer hover:underline" (click)="onShowCategoriesClicked()"
+        *ngIf="!showAllCategories()">More ...</span>
+    <span class="hover:cursor-pointer hover:underline" (click)="onShowCategoriesClicked()"
+        *ngIf="showAllCategories()">Less ...</span>
+</div>
+
+<button type="button"
+    class="flex items-start justify-between w-full p-2 text-base text-gray-400 transition duration-75 rounded-lg group"
+    aria-controls="rating-dropdown" data-collapse-toggle="rating-dropdown">
+    <span class="whitespace-nowrap">Rating</span>
+    <ad-ui-icon icon="chevron-down" color="gray" size="l"></ad-ui-icon>
+</button>
+
+<div class="md:hidden p-2 space-y-2" id="rating-dropdown">
+    <div *ngFor="let r of [5, 4, 3, 2, 1]" (click)="onRatingChanged(r)" class="hover:cursor-pointer">
+        <ad-ui-rating [rating]="r" />
+    </div>
+</div>
+
+<button type="button"
+    class="flex items-start justify-between w-full p-2 text-base text-gray-400 transition duration-75 rounded-lg group"
+    aria-controls="price-dropdown" data-collapse-toggle="price-dropdown">
+    <span class="whitespace-nowrap">Price</span>
+    <ad-ui-icon icon="chevron-down" color="gray" size="l"></ad-ui-icon>
+</button>
+
+<div class="md:hidden p-2 flex justify-between items-center" id="price-dropdown">
+    <div>
+        <label for="quantity-input" class="block text-sm font-medium text-gray-900 dark:text-white">Min</label>
+        <div class="relative flex items-center max-w-[8rem]">
+            <input type="text" data-input-counter
+                class="bg-gray-700 border-x-0 border-gray-600 h-11 text-center text-gray-200 text-sm block w-full py-2.5 placeholder-gray-400 focus:ring-0"
+                [value]="min" (input)="onMinChanged($event.target.value)" />
+        </div>
+    </div>
+
+    <div>
+        <label for="quantity-input" class="block text-sm font-medium text-gray-900 dark:text-white">Max</label>
+        <div class="relative flex items-center max-w-[8rem]">
+            <input type="text" data-input-counter
+                class="bg-gray-700 border-x-0 border-gray-600 h-11 text-center text-gray-200 text-sm block w-full py-2.5 placeholder-gray-400 focus:ring-0"
+                [value]="max" (input)="onMaxChanged($event.target.value)" />
+        </div>
+    </div>
+</div>

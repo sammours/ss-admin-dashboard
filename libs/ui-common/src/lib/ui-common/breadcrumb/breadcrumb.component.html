@@ -10,7 +10,7 @@
         <ad-ui-icon icon="chevron-right" color="gray"></ad-ui-icon>
       </span>
 
-      <a *ngIf="item.link; else noLink" routerLink="/products"
+      <a *ngIf="item.link; else noLink" [routerLink]="item.link"
         class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-white">
         <!-- <ad-ui-icon *ngIf="item.icon" size="l" [icon]="item.icon" color="light-blue"></ad-ui-icon> -->
         {{item.text}}

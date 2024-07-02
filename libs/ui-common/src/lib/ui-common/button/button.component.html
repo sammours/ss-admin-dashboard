@@ -1,0 +1,9 @@
+<button type="button" class="py-2.5 text-gray-200 px-5 me-2 mb-2 text-sm font-medium focus:outline-none rounded-lg border hover:text-white focus:ring-0 disabled:cursor-not-allowed disabled:opacity-80"
+    [ngClass]="{ 
+        'bg-gray-800 border-gray-600 hover:bg-gray-700': color() === 'gray',
+        'bg-green-800 border-green-600 hover:bg-green-700': color() === 'green',
+    }"
+    [disabled]="disabled()">
+    <ad-ui-icon [icon]="icon()" color="white" />
+    {{ text() }}
+</button>

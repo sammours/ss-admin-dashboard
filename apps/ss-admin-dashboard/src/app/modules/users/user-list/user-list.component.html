@@ -50,12 +50,15 @@
                 <thead class="text-xs text-gray-400 uppercase bg-gray-700">
                     <tr>
                         <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('name')">Name
-                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon></th>
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon>
+                        </th>
                         <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('jobTitle')">Job Title
-                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon></th>
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon>
+                        </th>
                         <th scope="col" class="px-6 py-3">Address</th>
                         <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('birthDate')">Birth date
-                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon></th>
+                            <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon>
+                        </th>
                         <th scope="col" class="cursor-pointer px-6 py-3" (click)="onSortClicked('registeredAt')">
                             Registered At
                             <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon>
@@ -64,7 +67,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of result.items; last" class="border-b bg-gray-800 border-gray-700">
+                    <tr *ngFor="let user of result.items; let first = first;"
+                        class="border-b bg-gray-800 border-gray-700">
                         <td scope="row" class="flex items-center px-6 py-4 whitespace-nowrap ">
                             <img class="w-10 h-10 rounded-full" [src]="user.avatar"
                                 [alt]="UserModelUtil.fullName(user)">
@@ -85,8 +89,11 @@
                         <td class="px-6 py-4" innerHTML="{{ UserModelUtil.address(user) | highlight : term }}"></td>
                         <td class="px-6 py-4">{{ user.birthDate | date: 'dd.MM.yyyy'}}</td>
                         <td class="px-6 py-4">{{ user.registeredAt | date: 'dd.MM.yyyy'}}</td>
-                        <td class="px-6 py-4"><ad-ui-menu [menuItems]="getMenuItem(user.id)"
-                                menuDirection="left"></ad-ui-menu></td>
+                        <td class="px-6 py-4">
+                            <ad-ui-menu [menuItems]="getMenuItem(user.id)" [id]="user.id"
+                                direction="bottom-start"></ad-ui-menu>
+
+                        </td>
                     </tr>
                 </tbody>
             </table>

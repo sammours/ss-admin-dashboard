@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserFacade, UserModel, UserModelUtil, UserValidator } from '@ss-admin-dashboard/feature';
 import { Breadcrumb, clone } from '@ss-admin-dashboard/util-common';
 import { BaseComponent } from '../../../base.component';
 import { takeUntil } from 'rxjs';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'ad-user-edit',
@@ -19,15 +20,21 @@ export class UserEditComponent extends BaseComponent implements OnInit {
     { text: 'Edit', link: ''}
   ];
 
+  protected editMode = false;
+
   protected validator = new UserValidator();
+  protected birthDate = '';
 
   constructor(protected readonly facade: UserFacade,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private ref: ChangeDetectorRef
   ) {
     super();
   }
 
-  public ngOnInit(): void {
+  override ngOnInit(): void {
+    super.ngOnInit();
+
     this.route.paramMap.subscribe(params => {
       if (params.has('id')) {
         this.user.id = params.get('id') ?? '';
@@ -38,9 +45,17 @@ export class UserEditComponent extends BaseComponent implements OnInit {
 
     this.facade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
-        this.user = clone(result)
+        this.user = clone(result);
+        if (this.user.birthDate) {
+          this.birthDate = this.user.birthDate.toFormat('dd.MM.yyyy');
+        }
       }
     });
+  }
+
+  public onDateChanged(value: string) {
+    this.user.birthDate = DateTime.fromFormat(value, 'dd.MM.yyyy');
+    this.validator.validate(this.user);
   }
 
   public onChanged() {

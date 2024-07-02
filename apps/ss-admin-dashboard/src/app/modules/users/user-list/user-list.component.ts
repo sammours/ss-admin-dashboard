@@ -3,6 +3,7 @@ import { FilterOptionsFactory, UserFacade, UserModel, UserModelUtil } from '@ss-
 import { Breadcrumb, FilterOptions, MenuItem, PaginatedList, clone } from '@ss-admin-dashboard/util-common';
 import { BaseComponent } from '../../../base.component';
 import { takeUntil } from 'rxjs';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'ad-user-list',
@@ -25,7 +26,8 @@ export class UserListComponent extends BaseComponent implements OnInit {
     this.filter.sort = { field: 'name', direction: 'asc'};
   }
 
-  public ngOnInit(): void {
+  override ngOnInit(): void {
+    initFlowbite();
     this.getAll();
     this.facade.list$.pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
@@ -36,7 +38,7 @@ export class UserListComponent extends BaseComponent implements OnInit {
 
   protected getMenuItem(id: string) {
     return [
-      { text: 'Edit', link: `/users/${id}`, icon: 'edit'},
+      { text: 'Edit' + id, link: `/users/${id}`, icon: 'edit'},
       { text: 'Delete', link: '', icon: 'delete'}
     ] as MenuItem[];
   }

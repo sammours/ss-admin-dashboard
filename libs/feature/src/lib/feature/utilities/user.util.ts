@@ -8,4 +8,12 @@ export class UserModelUtil {
     public static address(user: UserModel) {
         return `${user.street}, ${user.zipCode}  <br />${user.city}, ${user.country}`;
     }
+
+    public static userStatus(user: UserModel): 'blocked' | 'active' | 'inactive' {
+        if (user.blocked) {
+            return 'blocked';
+        }
+
+        return user.active ? 'active' : 'inactive';
+    } 
 }

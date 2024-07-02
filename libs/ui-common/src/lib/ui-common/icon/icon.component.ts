@@ -24,13 +24,29 @@ import {
   heroCube,
   heroStar,
   heroXMark,
-  heroArrowUpTray
+  heroArrowUpTray,
+  heroClock,
+  heroTag,
+  heroChevronLeft,
+  heroFunnel,
+  heroAdjustmentsHorizontal,
+  heroComputerDesktop,
+  heroTv,
+  heroTruck,
+  heroShoppingBag,
+  heroMusicalNote,
+  heroDevicePhoneMobile,
+  heroBuildingStorefront,
+  heroBookOpen,
+  heroNoSymbol,
+  heroHeart,
+  heroShoppingCart
 } from '@ng-icons/heroicons/outline';
 
 import { IconType } from '@ss-admin-dashboard/util-common';
 
 type IconColor = 'white' | 'black' | 'gray' | 'light-blue';
-type IconSize = 's' | 'm' | 'l'
+type IconSize = 's' | 'm' | 'l' | 'xl';
 
 @Component({
   standalone: true,
@@ -44,6 +60,7 @@ export class IconComponent implements OnInit {
   @Input({ required: true }) icon!: IconType;
   @Input() color: IconColor = 'black';
   @Input() size: IconSize = 'm';
+  @Input() disabled = false;
 
   protected iconSvg = '';
   protected iconSize = 16;
@@ -66,6 +83,7 @@ export class IconComponent implements OnInit {
       case 'arrow-left': this.iconSvg = heroArrowLeft; break;
       case 'arrow-right': this.iconSvg = heroArrowRight; break;
       case 'chevron-right': this.iconSvg = heroChevronRight; break;
+      case 'chevron-left': this.iconSvg = heroChevronLeft; break;
       case 'chevron-down': this.iconSvg = heroChevronDown; break;
       case 'search': this.iconSvg = heroMagnifyingGlass; break;
       case 'save': this.iconSvg = heroCheck; break;
@@ -74,6 +92,21 @@ export class IconComponent implements OnInit {
       case 'product': this.iconSvg = heroCube; break;
       case 'star': this.iconSvg = heroStar; break;
       case 'upload': this.iconSvg = heroArrowUpTray; break;
+      case 'clock': this.iconSvg = heroClock; break;
+      case 'tag': this.iconSvg = heroTag; break;
+      case 'filter': this.iconSvg = heroFunnel; break;
+      case 'orderBy': this.iconSvg = heroAdjustmentsHorizontal; break;
+      case 'computer': this.iconSvg = heroComputerDesktop; break;
+      case 'tv': this.iconSvg = heroTv; break;
+      case 'truck': this.iconSvg = heroTruck; break;
+      case 'shopping': this.iconSvg = heroShoppingBag; break;
+      case 'music': this.iconSvg = heroMusicalNote; break;
+      case 'mobile': this.iconSvg = heroDevicePhoneMobile; break;
+      case 'grocery': this.iconSvg = heroBuildingStorefront; break;
+      case 'book': this.iconSvg = heroBookOpen; break;
+      case 'block': this.iconSvg = heroNoSymbol; break;
+      case 'heart': this.iconSvg = heroHeart; break;
+      case 'cart': this.iconSvg = heroShoppingCart; break;
       default: this.iconSvg = heroHome; break;
     }
 
@@ -81,6 +114,7 @@ export class IconComponent implements OnInit {
       case 's': this.iconSize = 8; break;
       case 'm': this.iconSize = 16; break;
       case 'l': this.iconSize = 24; break;
+      case 'xl': this.iconSize = 32; break;
       default: this.iconSize = 16; break;
     }
   }

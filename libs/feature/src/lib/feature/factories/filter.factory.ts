@@ -1,7 +1,13 @@
 import { FilterOptions } from '@ss-admin-dashboard/util-common';
 
 export class FilterOptionsFactory {
-  public sort(filter: FilterOptions, field: string) {
+  public sort(filter: FilterOptions, field: string, direction: '' | 'asc' | 'desc' = '') {
+    if (direction !== '') {
+      filter.sort.direction = direction;
+      filter.sort.field = field;
+      return;
+    }
+
     if (filter.sort.field === field) {
       filter.sort.direction = filter.sort.direction === 'asc' ? 'desc' : 'asc';
     } else {
@@ -38,5 +44,9 @@ export class FilterOptionsFactory {
 
   public hasFilter(filter: FilterOptions, field: string) {
     return filter.filter.contains(x => x.field === field);
+  }
+
+  public getFilter(filter: FilterOptions, field: string) {
+    return filter.filter.firstOrDefault(x => x.field === field);
   }
 }

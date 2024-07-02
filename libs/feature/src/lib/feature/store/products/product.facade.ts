@@ -10,7 +10,7 @@ Injectable({
 export class ProductFacade {
     private readonly store = inject(Store);
     public list$ = this.store.select(selectors.selectProductList);
-    public user$ = this.store.select(selectors.selectProduct);
+    public product$ = this.store.select(selectors.selectProduct);
     public isLoading$ = this.store.select(selectors.selectIsLoading);
 
     public getAll(filter: FilterOptions) {

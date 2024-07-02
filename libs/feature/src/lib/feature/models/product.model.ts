@@ -8,6 +8,7 @@ export class ProductModel {
     public discount = 0;
     public amount = 0;
     public category = '';
+    public material = '';
     public rating = 0;
     public images: string[] = [];
     public createdAt: DateTime | undefined;

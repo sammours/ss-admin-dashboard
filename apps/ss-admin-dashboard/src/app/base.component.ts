@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { initFlowbite, initTooltips } from 'flowbite';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -6,8 +7,12 @@ import { Subject } from 'rxjs';
   standalone: true,
   template: ``,
 })
-export class BaseComponent implements OnDestroy {
+export class BaseComponent implements OnInit, OnDestroy {
   protected unsubscribe$ = new Subject();
+  
+  ngOnInit(): void {
+    initFlowbite();
+  }
 
   public ngOnDestroy() {
     this.unsubscribe$.next(1);

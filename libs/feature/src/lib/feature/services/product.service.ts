@@ -41,16 +41,18 @@ export class ProductsService {
   private filterResult(filterList: Filter[], result: ProductModel[])  {
     filterList.forEach(filter => {
       switch (filter.field) {
-         case 'all':
+         case 'term':
           result = result.where(x => 
             x.name.contains(filter.value) ||
-            x.description.contains(filter.value) ||
-            x.category.contains(filter.value) ||
-            x.price === parseFloat(filter.value));
+            x.description.contains(filter.value));
             break;
-
-        case 'discount': result = result.where(x => x.discount > 0); break;
-        case 'available': result = result.where(x => x.amount > 0); break;
+        case 'categories': {
+          const values = filter.value.split(',');
+          result = result.where(x => values.contains(c => c === x.category ));
+          break;
+        }
+        case 'min': result = result.where(x => x.price >= parseInt(filter.value, 10)); break;
+        case 'max': result = result.where(x => x.price <= parseInt(filter.value, 10)); break;
         case 'rating': result = result.where(x => x.rating === parseInt(filter.value, 10)); break;
       }
     });
@@ -67,22 +69,6 @@ export class ProductsService {
         return sort.direction === 'asc'
           ? result.orderBy((x) => x.price)
           : result.orderByDescending((x) => x.price);
-      case 'discount':
-        return sort.direction === 'asc'
-          ? result.orderBy((x) => x.discount)
-          : result.orderByDescending((x) => x.discount);
-      case 'category':
-        return sort.direction === 'asc'
-          ? result.orderBy((x) => x.category)
-          : result.orderByDescending((x) => x.category);
-          case 'rating':
-            return sort.direction === 'asc'
-              ? result.orderBy((x) => x.rating)
-              : result.orderByDescending((x) => x.rating);
-              case 'amount':
-            return sort.direction === 'asc'
-              ? result.orderBy((x) => x.amount)
-              : result.orderByDescending((x) => x.amount);
       default:
         return sort.direction === 'asc'
         ? result.orderBy((x) => x.name)

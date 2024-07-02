@@ -7,6 +7,8 @@ export * from './lib/feature/utilities';
 export * from './lib/feature/store/providers';
 export * from './lib/feature/store/users/user.facade';
 export * from './lib/feature/store/products/product.facade';
+export * from './lib/feature/store/comments/comment.facade';
 
 export * from './lib/feature/validations';
+export * from './lib/feature/data';
 export * from './lib/feature/factories/filter.factory';

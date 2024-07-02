@@ -1,0 +1,18 @@
+<!-- carousel -->
+<div class="flex overflow-hidden rounded-lg relative w-full h-full">
+  <ng-container *ngFor="let slide of slides(); let i = index">
+    <img *ngIf="i === currentSlide" [src]="slide" class="image-slider w-full w-full rounded-lg border border-gray-600" @carouselAnimation />
+  </ng-container>
+
+  <div
+    class="border-none absolute left-0 cursor-pointer flex px-2 justify-center items-center text-gray-200 h-full opacity-80"
+    (click)="onPreviousClicked()">
+    <ad-ui-icon icon="chevron-left" color="light-blue" size="l" class="bg-gray-800/90 flex justify-center items-center p-1 rounded-full hover:bg-gray-800/60" />
+  </div>
+
+  <div
+    class="border-none absolute right-0 cursor-pointer flex px-2 justify-center items-center text-gray-200 h-full opacity-80"
+    (click)="onNextClicked()">
+    <ad-ui-icon icon="chevron-right" color="light-blue" size="l" class="bg-gray-800/90 flex justify-center items-center p-1 rounded-full hover:bg-gray-800/60" />
+  </div>
+</div>

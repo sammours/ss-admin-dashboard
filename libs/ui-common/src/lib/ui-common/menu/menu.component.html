@@ -1,15 +1,20 @@
-<button data-ripple-light="true" data-popover-target="menu" (click)="toggleMenu()"
-  class="mr-3 rounded-full items-center px-3 py-2.5 text-center hover:shadow-lg">
-  <ad-ui-icon icon="three-dots" color="white" />
+<button [id]="'dropdown-button-' + id" [attr.data-dropdown-toggle]="'dropdown-' + id"
+  [attr.data-dropdown-placement]="direction" aria-labelledby="menu-dropdown"
+  class="inline-block px-2 text-gray-400 bg-transparent hover:bg-gray-700 focus:ring-1 focus:outline-none focus:ring-gray-700 rounded-lg text-sm p-1.5"
+  type="button">
+  <span class="sr-only">Open dropdown</span>
+  <ad-ui-icon icon="three-dots" color="light-blue" />
 </button>
-<ul [ngClass]="{'hidden': !showMenu(), 'block': showMenu()}"
-    [class.-translate-x-36]="menuDirection === 'left'"
-    role="menu" data-popover="menu"
-    data-popover-placement="bottom"
-    class="absolute z-10 min-w-[180px] mt-2 overflow-auto rounded-md border border-gray-50 bg-gray-900/90 p-3 focus:outline-none">
-  <li *ngFor="let item of menuItems" role="menuitem" (click)="onItemClicked(item)"
-    class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-gray-700 text-200">
-    <ad-ui-icon [icon]="item.icon" color="white" *ngIf="item.icon"></ad-ui-icon>
-    {{ item.text }}
-  </li>
-</ul>
+
+<div [id]="'dropdown-' + id" aria-labelledby="menu-dropdown"
+  class="z-20 hidden bg-gray-700 divide-y divide-gray-100 rounded-lg shadow w-44"
+  [ngClass]="{ 'border border-gray-800': withBorder }">
+  <ul class="py-2 text-sm text-gray-200" aria-labelledby="dropdownButton">
+    <li *ngFor="let item of menuItems" (click)="onItemClicked(item)">
+      <a routerLink="{{item.link}}" class="block px-4 py-2 hover:bg-gray-600 hover:text-white cursor-pointer">
+        <ad-ui-icon [icon]="item.icon" color="white" *ngIf="item.icon"></ad-ui-icon>
+        {{ item.text }}
+      </a>
+    </li>
+  </ul>
+</div>
