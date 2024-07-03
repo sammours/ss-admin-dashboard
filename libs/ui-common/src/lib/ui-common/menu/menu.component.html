@@ -1,20 +1,13 @@
-<button [id]="'dropdown-button-' + id" [attr.data-dropdown-toggle]="'dropdown-' + id"
-  [attr.data-dropdown-placement]="direction" aria-labelledby="menu-dropdown"
-  class="inline-block px-2 text-gray-400 bg-transparent hover:bg-gray-700 focus:ring-1 focus:outline-none focus:ring-gray-700 rounded-lg text-sm p-1.5"
-  type="button">
-  <span class="sr-only">Open dropdown</span>
-  <ad-ui-icon icon="three-dots" color="light-blue" />
+<button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="menuItems()" aria-label="Custom menu"
+  class="flex items-center justify-center ">
+  <ad-ui-icon icon="three-dots" color="white" class="flex"  size="l" />
 </button>
-
-<div [id]="'dropdown-' + id" aria-labelledby="menu-dropdown"
-  class="z-20 hidden bg-gray-700 divide-y divide-gray-100 rounded-lg shadow w-44"
+<mat-menu #menu="matMenu" class="bg-gray-700 py-2 "
   [ngClass]="{ 'border border-gray-800': withBorder }">
-  <ul class="py-2 text-sm text-gray-200" aria-labelledby="dropdownButton">
-    <li *ngFor="let item of menuItems" (click)="onItemClicked(item)">
-      <a routerLink="{{item.link}}" class="block px-4 py-2 hover:bg-gray-600 hover:text-white cursor-pointer">
-        <ad-ui-icon [icon]="item.icon" color="white" *ngIf="item.icon"></ad-ui-icon>
-        {{ item.text }}
-      </a>
-    </li>
-  </ul>
-</div>
+  <button *ngFor="let item of menuItems()" (click)="onItemClicked(item)" 
+  class="text-gray-200 px-4 py-2 hover:bg-gray-600 hover:text-white cursor-pointer font-raleway text-sm flex gap-2 w-full"
+    [yPosition]="direction" [xPosition]="direction">
+    <ad-ui-icon [icon]="item.icon" color="white" *ngIf="item.icon"></ad-ui-icon>
+    <span>{{ item.text }}</span>
+</button>
+</mat-menu>

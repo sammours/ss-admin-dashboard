@@ -1,39 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, input, signal } from '@angular/core';
 
 import { MenuItem } from '@ss-admin-dashboard/util-common';
 import { IconComponent } from '../icon/icon.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { initDropdowns } from 'flowbite';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
-type MenuDirection = 'left' | 'right' | 'top' | 'bottom' | 'bottom-start' | 'top-start';
+type MenuDirection = 'before' | 'after' | 'above' | 'below';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [CommonModule, IconComponent, MatButtonModule, MatMenuModule, RouterModule],
   selector: 'ad-ui-menu',
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
 })
-export class MenuComponent implements OnInit {
-  @Input({ required: true }) menuItems!: MenuItem[];
-  @Input({ required: true }) id!: string;
-  @Input({ required: false }) keepOpen = false;
-  @Input({ required: false }) withBorder = false;
-  @Input({ required: false }) direction: MenuDirection = 'bottom-start';
+export class MenuComponent {
+  protected menuItems = input.required<MenuItem[]>();
+  protected withBorder = input<boolean>(false);
+  protected direction = input<MenuDirection>('below');
 
-  protected showMenu = signal(false);
-
-  @Output() menuOpen = new EventEmitter<boolean>();
-  @Output() menuClose = new EventEmitter<boolean>();
-  @Output() menuToggle = new EventEmitter<boolean>();
-
-  constructor(private readonly elementRef: ElementRef, private readonly router: Router) {
+  constructor(private readonly router: Router) {
   } 
-
-  public ngOnInit(): void {
-    initDropdowns();
-  }
 
   protected onItemClicked(item: MenuItem) {
     if (item.link !== '') {

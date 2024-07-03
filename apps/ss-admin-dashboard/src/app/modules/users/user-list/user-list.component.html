@@ -89,10 +89,13 @@
                         <td class="px-6 py-4" innerHTML="{{ UserModelUtil.address(user) | highlight : term }}"></td>
                         <td class="px-6 py-4">{{ user.birthDate | date: 'dd.MM.yyyy'}}</td>
                         <td class="px-6 py-4">{{ user.registeredAt | date: 'dd.MM.yyyy'}}</td>
-                        <td class="px-6 py-4">
-                            <ad-ui-menu [menuItems]="getMenuItem(user.id)" [id]="user.id"
-                                direction="bottom-start"></ad-ui-menu>
-
+                        <td class="px-6 py-4 grid grid-cols-2 gap-2">
+                            <a [routerLink]="['/users', user.id]">
+                                <ad-ui-icon icon="edit" color="light-blue" size="l" />
+                            </a>
+                            <a>
+                                <ad-ui-icon icon="delete" color="light-blue" size="l" />
+                            </a>
                         </td>
                     </tr>
                 </tbody>

@@ -21,12 +21,13 @@ export class SidebarComponent {
 
   protected menuItems = signal<SidebarMenuItem[]>([
     { verticalPosition: 'top', text: 'Dashboard', link: '', icon: 'home'},
-    { verticalPosition: 'top', text: 'Users', link: '/users', icon: 'users', badge: 'Pro'},
+    { verticalPosition: 'top', text: 'Users', link: '/users', icon: 'users'},
     { verticalPosition: 'top', text: 'Product management', link: '', icon: 'product', children: [
       { text: 'Product overview', link: '/products', icon: 'product' },
-      { text: 'Order overview', link: '', icon: 'product' },
+      { text: 'Order overview', link: '/orders', icon: 'cart' },
       { text: 'Shipping overview', link: '', icon: 'product' },
     ] },
+    { verticalPosition: 'top', text: 'Inbox', link: '/inbox', icon: 'inbox'},
     { verticalPosition: 'bottom', text: 'Logout', link: '', icon: 'logout'},
   ]);
 

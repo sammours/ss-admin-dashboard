@@ -22,6 +22,10 @@ class FilterItem<T> {
 })
 export class ProductListFilterComponent extends BaseComponent implements OnInit {
   public products = input.required<ProductModel[]>();
+  
+  protected openCategoryMenu = true;
+  protected openRatingMenu = false;
+  protected openPriceMenu = false;
 
   protected allCategories: FilterItem<string>[] = [];
   protected showAllCategories = signal(false);

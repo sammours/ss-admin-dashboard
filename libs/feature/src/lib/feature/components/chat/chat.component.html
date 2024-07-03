@@ -1,0 +1,32 @@
+<button (click)="openChat = !openChat"
+  class="fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium border rounded-full text-gray-200 w-16 h-16 bg-gray-600 m-0 cursor-pointer border-gray-600 bg-none p-0 normal-case leading-5 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-800"
+  type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed">
+  <ad-ui-icon icon="chat" color="light-blue" size="xl" />
+</button>
+
+<div class="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-gray-700 border border-gray-800 p-4 rounded-lg w-[440px] h-[640px] flex flex-col gap-4"
+  [ngClass]="{ '': openChat, 'hidden': !openChat }">
+
+  <div class="flex items-center gap-3 py-4 h-[50px] border-b border-gray-400/50">
+    <img class="w-10 h-10 rounded-full" [src]="avatar()" />
+    <div class="text-white text-base font-semibold">{{ fullName() }}</div>
+  </div>
+
+  <div class="flex-1 overflow-y-auto px-2" #chatContainer>
+    <div class="h-auto overflow-y-auto flex flex-col gap-2 w-full">
+      <div *ngFor="let chat of chats()"
+        class="max-w-[320px] leading-1.5 px-4 py-2 border-gray-200 bg-gray-800 rounded-xl" [ngClass]="{ 
+            'rounded-ss-none': chat.owner === 'me', 
+            'rounded-se-none self-end': chat.owner === 'you'}">
+        <p class="text-sm font-normal py-1.5 text-gray-200">{{ chat.message}}</p>
+        <span class="text-sm font-normal text-gray-400">
+          {{ chat.date | date: 'dd.MM.yyyy hh:mm'}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="justify-self-end flex items-center justify-between gap-2 h-fit w-full">
+    <input class="flex-1 rounded-md border bg-gray-200 border-gray-800 px-3 py-2 text-sm placeholder-gray-400 text-gray-700 focus:outline-none focus:ring-0"
+      placeholder="Type your message">
+    <ad-ui-button text="Send" />
+  </div>
+</div>

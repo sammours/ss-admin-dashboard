@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component,   input,  } from '@angular/core';
 
+
+type LineMargin = 's' | 'm' | 'l';
 @Component({
   standalone: true,
   imports: [CommonModule],
@@ -10,4 +12,5 @@ import { Component,   input,  } from '@angular/core';
 })
 export class LineComponent {
   public text = input<string>('');
+  public margin = input<LineMargin>('l');
 }

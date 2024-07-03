@@ -1,0 +1,124 @@
+<div class="relative md:my-3 md:mx-5">
+    <ad-ui-breadcrumb [breadcrumbs]="breadcrumbs" header="User details"></ad-ui-breadcrumb>
+    <section class="py-8 antialiased ">
+        <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+            <div class="mx-auto max-w-7xl">
+                <div class="gap-4 sm:flex sm:items-center sm:justify-between">
+                    <div></div>
+
+                    <div class="mt-6 gap-4 space-y-4 sm:mt-0 sm:flex sm:items-center sm:justify-end sm:space-y-0">
+                        <div>
+                            <label for="order-type" class="sr-only mb-2 block text-sm font-medium text-white">Select
+                                order type</label>
+                            <select id="order-type"
+                                class="block w-full min-w-[8rem] rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-gray-200 focus:ring-0"
+                                (change)="onOrderTypeSelected($event.target.value)">
+                                <option value="" selected>All orders</option>
+                                <option value="pre-order">Pre-order</option>
+                                <option value="in transit">In transit</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+
+                        <span class="inline-block text-gray-400"> from </span>
+
+                        <div>
+                            <label for="duration" class="sr-only mb-2 block text-sm font-medium text-gray-200">Select
+                                duration</label>
+                            <select id="duration"
+                                class="block w-full min-w-[8rem] rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-gray-200 focus:ring-0"
+                                (change)="onDateSelected($event.target.value)">
+                                <option value="" selected>all</option>
+                                <option value="week" selected>this week</option>
+                                <option value="month">this month</option>
+                                <option value="three-months">the last 3 months</option>
+                                <option value="six-months">the last 6 months</option>
+                                <option value="year">this year</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button id="sort-drowndown" data-dropdown-toggle="sort-dropdown"
+                                data-dropdown-placement="bottom-start"
+                                class="block rounded-lg border border-gray-600 bg-gray-700 px-3 py-2 text-sm text-gray-200 hover:bg-gray-800 focus:ring-0"
+                                type="button">
+                                <ad-ui-icon icon="orderBy" color="light-blue" />
+                            </button>
+                            <div id="sort-dropdown"
+                                class="z-10 hidden bg-gray-700 divide-y divide-gray-100 rounded-lg shadow w-32">
+                                <ul class="text-sm text-gray-200 rounded-lg" aria-labelledby="sort-drowndown">
+                                    <li class="hover:rounded-lg hover:bg-gray-600">
+                                        <span class="block px-4 py-2 cursor-pointer flex gap-2"
+                                            (click)="onSortChanged('asc')">
+                                            <ad-ui-icon icon="arrow-up" color="light-blue" />
+                                            First date
+                                        </span>
+                                    </li>
+                                    <li class="hover:rounded-lg hover:bg-gray-600">
+                                        <span class="block px-4 py-2 cursor-pointer flex gap-2"
+                                            (click)="onSortChanged('desc')">
+                                            <ad-ui-icon icon="arrow-down" color="light-blue" />
+                                            Last date
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flow-root sm:mt-8" *ngFor="let order of result.items">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-y-4 py-6">
+                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                                <dt class="text-gray-300">Order Number:</dt>
+                                <dd class="mt-1.5 text-base font-semibold text-white">
+                                    <a href="#" class="hover:underline">{{ order.number }}</a>
+                                </dd>
+                            </dl>
+
+                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                                <dt class="text-gray-300">Date:</dt>
+                                <dd class="mt-1.5 text-base font-semibold text-white">{{ order.date | date:
+                                    'dd.MM.yyyy'}}</dd>
+                            </dl>
+
+                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                                <dt class="text-gray-300">Price:</dt>
+                                <dd class="mt-1.5 text-base font-semibold text-white">{{ getTotalPrice(order)}}</dd>
+                            </dl>
+
+                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                                <dt class="text-gray-300">Status:</dt>
+                                <dd class="me-2 mt-1.5 rounded px-2.5 py-0.5 flex gap-1 items-center w-fit" [ngClass]="{ 
+                                        'bg-blue-900 text-blue-300 border border-blue-300': OrderUtil.isPreOrder(order.status),
+                                        'bg-green-900 text-green-300 border border-green-300': OrderUtil.isConfirmed(order.status),
+                                        'bg-yellow-900 text-yellow-300 border border-yellow-300':  OrderUtil.isInTransit(order.status),
+                                        'bg-red-900 text-red-300 border border-red-300':  OrderUtil.isCancelled(order.status),
+                                    }" text-red-300 bg-red-100>
+                                    <ad-ui-icon [icon]="OrderUtil.getIcon(order.status)" color="light-blue" />
+                                    {{ order.status }}
+                                </dd>
+                            </dl>
+
+                            <div class="w-full grid grid-cols-2 lg:flex lg:w-72 lg:items-center lg:justify-end gap-4">
+                                <ad-ui-button class="w-full lg:w-auto" text="View details"
+                                    (click)="onEditClicked(order.id)" />
+                                <ad-ui-button class="w-full lg:w-auto" *ngIf="!OrderUtil.isConfirmed(order.status)"
+                                    text="Cancel order" color="transparent-red" />
+                            </div>
+                        </div>
+                    </div>
+                    <ad-ui-line margin="s" />
+                </div>
+
+                <div class="flex items-center w-full justify-evenly">
+                    <ad-ui-paginator [currentPage]="filter.skip / filter.take" [length]="result.totalCount"
+                        (page)="onPageChanged($event)"></ad-ui-paginator>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>

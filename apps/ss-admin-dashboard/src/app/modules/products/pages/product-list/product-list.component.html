@@ -4,24 +4,24 @@
     
 
     <div class="flex max-sm:flex-col gap-2 h-auto">
-        <div class="p-2 h-fit rounded-lg bg-gray-800 flex-1 max-sm:hidden">
+        <div class="p-2 h-fit rounded-lg flex-1 max-sm:hidden">
             <div class="w-full text-gray-400 inline-flex justify-center items-center gap-2 mb-2 py-2">
                 <ad-ui-icon icon="filter" color="gray" />
                 Filter
             </div>
             <hr class="w-full h-px bg-gray-700 border-0" />
-            <div *ngIf="openMenu" class="text-gray-400 py-4 max-sm:z-40 max-sm:fixed">
+            <div class="text-gray-400 py-4 max-sm:z-40 max-sm:fixed">
                 <ad-product-list-filter [products]="result.items" (filter)="onFilterChanged($event)" *ngIf="result.items.length > 0" />
             </div>
         </div>
 
         <div class="sm:hidden">
-            <button id="filter-dropdown-button" data-dropdown-toggle="filter-dropdown" class="inline-flex items-center gap-2 w-full py-2 px-4 text-center text-gray-400 bg-gray-800 rounded-lg md:mb-0 hover:bg-gray-700 focus:ring-0 focus:outline-none" type="button">
+            <button id="filter-dropdown-button" data-dropdown-toggle="filter-dropdown" class="inline-flex items-center gap-2 w-full py-2 px-4 text-center text-gray-400 bg-gray-800 rounded-lg md:mb-0 focus:ring-0 focus:outline-none" type="button">
                 <ad-ui-icon icon="filter" color="gray" />
                     Filter
             </button>
                 
-            <div id="filter-dropdown" class="z-10 hidden w-full px-4 py-2 bg-gray-800 rounded-lg shadow text-gray-400">
+            <div id="filter-dropdown" class="z-10 hidden w-full px-4 py-2 bg-gray-700 rounded-lg shadow-lg text-gray-400">
                 <ad-product-list-filter [products]="result.items" (filter)="onFilterChanged($event)" *ngIf="result.items.length > 0" />
             </div>
         </div>

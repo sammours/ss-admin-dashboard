@@ -40,7 +40,14 @@ import {
   heroBookOpen,
   heroNoSymbol,
   heroHeart,
-  heroShoppingCart
+  heroShoppingCart,
+  heroEye,
+  heroBookmark,
+  heroArrowDown,
+  heroArrowUp,
+  heroChatBubbleOvalLeft,
+  heroPaperAirplane,
+  heroInbox
 } from '@ng-icons/heroicons/outline';
 
 import { IconType } from '@ss-admin-dashboard/util-common';
@@ -80,6 +87,8 @@ export class IconComponent implements OnInit {
       case 'cancel': this.iconSvg = heroXCircle; break;
       case 'x': this.iconSvg = heroXMark; break;
       case 'sort': this.iconSvg = heroChevronUpDown; break;
+      case 'arrow-up': this.iconSvg = heroArrowUp; break;
+      case 'arrow-down': this.iconSvg = heroArrowDown; break;
       case 'arrow-left': this.iconSvg = heroArrowLeft; break;
       case 'arrow-right': this.iconSvg = heroArrowRight; break;
       case 'chevron-right': this.iconSvg = heroChevronRight; break;
@@ -107,6 +116,12 @@ export class IconComponent implements OnInit {
       case 'block': this.iconSvg = heroNoSymbol; break;
       case 'heart': this.iconSvg = heroHeart; break;
       case 'cart': this.iconSvg = heroShoppingCart; break;
+      case 'preview': this.iconSvg = heroEye; break;
+      case 'bookmark': this.iconSvg = heroBookmark; break;
+      case 'chat': this.iconSvg = heroChatBubbleOvalLeft; break;
+      case 'send': this.iconSvg = heroPaperAirplane; break;
+      case 'inbox': this.iconSvg = heroInbox; break;
+
       default: this.iconSvg = heroHome; break;
     }
 

@@ -1,4 +1,5 @@
-<div class="inline-flex items-center justify-center w-full my-8">
+<div class="inline-flex items-center justify-center w-full my-8"
+    [ngClass]="{ 'my-2' : margin() === 's', 'my-4' : margin() === 'm', 'my-8' : margin() === 'l'}">
     <hr class="w-full h-px my-2 border-0 bg-gray-700">
     <span class="absolute px-3 font-medium text-gray-200 bg-gray-900" *ngIf="text() !== ''">{{ text() }}</span>
 </div>

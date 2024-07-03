@@ -1,80 +1,67 @@
-<button data-modal-target="product-preview-modal" data-modal-toggle="product-preview-modal"
-    class="block text-gray-200 bg-gray-600 hover:bg-gray-700 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center focus:ring-0"
-    type="button">
-    Preview
-</button>
-
-<div id="product-preview-modal" tabindex="-1" aria-hidden="true"
-    class="hidden fixed z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-    data-modal-backdrop="static">
-
-    <div class="relative p-4 w-8/12 max-h-full">
-        <div class="relative rounded-lg shadow bg-gray-800">
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-600">
-                <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-200 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600"
-                    data-modal-hide="product-preview-modal">
-                    <ad-ui-icon icon="x" color="light-blue" />
-                    <span class="sr-only">Close preview</span>
-                </button>
+<div mat-dialog-title class="bg-gray-800 flex flex-row-reverse w-full p-4 text-gray-200 border-b border-gray-600">
+    <ad-ui-icon icon="x" color="light-blue" size="l" mat-dialog-close class="cursor-pointer" />
+</div>
+<mat-dialog-content class="bg-gray-800">
+    <div class="p-4 md:p-5 space-y-4">
+        <div class="flex gap-8">
+            <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+                <ad-ui-carousel [slides]="product().images" />
             </div>
 
-            <div class="p-4 md:p-5 space-y-4">
-                <div class="flex gap-8">
-                    <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
-                        <ad-ui-carousel [slides]="product().images" />
-                    </div>
+            <div class="mt-6 sm:mt-8 lg:mt-0">
+                <span *ngIf="product().amount === 0"
+                    class="bg-red-900 text-red-300 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Not available</span>
+                <span *ngIf="product().amount > 0"
+                    class="bg-green-900 text-green-300 text-xs font-medium me-2 px-2.5 py-0.5 rounded">In stock</span>
+                <h1 class="text-xl font-semibold text-gray-200 sm:text-2xl">
+                    {{ product().name }}
+                </h1>
+                <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+                    <p class="text-xl text-gray-200 sm:text-2xl">
+                        {{ ProductUtil.getFinalPrice(this.product()) }} €
+                    </p>
 
-                    <div class="mt-6 sm:mt-8 lg:mt-0">
-                        <span *ngIf="product().amount === 0" class="bg-red-900 text-red-300 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Not available</span>
-                        <span *ngIf="product().amount > 0" class="bg-green-900 text-green-300 text-xs font-medium me-2 px-2.5 py-0.5 rounded">In stock</span>
-                        <h1 class="text-xl font-semibold text-gray-200 sm:text-2xl">
-                            {{ product().name }}
-                        </h1>
-                        <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-                            <p class="text-2xl text-gray-200 sm:text-3xl">
-                                {{ ProductUtil.getFinalPrice(this.product()) }} €
-                            </p>
+                </div>
+                <div class="flex items-center gap-2 mt-2 sm:mt-0">
+                    <ad-ui-rating [rating]="product().rating" />
+                    <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
+                        ({{ product().rating }})
+                    </p>
+                    <a
+                        class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white">
+                        ({{ comments().length }}) Reviews
+                    </a>
+                </div>
 
-                            <div class="flex items-center gap-2 mt-2 sm:mt-0">
-                                <ad-ui-rating [rating]="product().rating" />
-                                <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                                    ({{ product().rating }})
-                                </p>
-                                <a
-                                    class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white">
-                                    ({{ comments().length }}) Reviews
-                                </a>
-                            </div>
-                        </div>
+                <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                    <ad-ui-button text="Add to favorite" icon="heart" />
+                    <ad-ui-button color="green" text="Add to cart" icon="cart" />
+                </div>
 
-                        <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                            <ad-ui-button text="Add to favorite" icon="heart" />
-                            <ad-ui-button color="green" text="Add to cart" icon="cart" />
-                        </div>
+                <ad-ui-line />
 
-                        <ad-ui-line />
 
-                       
-                        
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <span class="bg-gray-700 text-gray-300 text-xs font-medium me-2 px-2.5 py-1 rounded flex items-center gap-2 justify-center w-fit">
-                                <ad-ui-icon  [icon]="CategoryUtil.getIcon(product().category)" color="light-blue" />
-                                {{ product().category }}
-                            </span>
 
-                            <div>
-                                <span class="text-gray-200 mr-4">Material</span>
-                                <span id="material" class="bg-gray-700 text-gray-300 text-xs font-medium me-2 px-2.5 py-1 rounded text-center w-fit">{{ product().material }}</span>
-                            </div>
-                        </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <span
+                        class="bg-gray-700 text-gray-300 text-xs font-medium me-2 px-2.5 py-1 rounded flex items-center gap-2 justify-center w-fit">
+                        <ad-ui-icon [icon]="CategoryUtil.getIcon(product().category)" color="light-blue" />
+                        {{ product().category }}
+                    </span>
 
-                        <p class="mb-6 text-gray-500 dark:text-gray-400">
-                            {{ product().description }}
-                        </p>
+                    <div>
+                        <!-- <span class="text-gray-200 mr-4">Material</span> -->
+                        <span id="material"
+                            class="bg-gray-700 text-gray-300 text-xs font-medium me-2 px-2.5 py-1 rounded text-center w-fit">
+                            Material: {{ product().material }}
+                        </span>
                     </div>
                 </div>
+
+                <p class="mb-6 text-gray-500 dark:text-gray-400">
+                    {{ product().description }}
+                </p>
             </div>
         </div>
     </div>
-</div>
+</mat-dialog-content>

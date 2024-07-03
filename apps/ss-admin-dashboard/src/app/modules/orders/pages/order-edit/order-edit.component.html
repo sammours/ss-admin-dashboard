@@ -1,0 +1,126 @@
+<div class="relative md:my-3 md:mx-5">
+  <ad-ui-breadcrumb [breadcrumbs]="breadcrumbs" header="Order summary"></ad-ui-breadcrumb>
+
+
+  <div class="mx-auto max-w-3xl">
+    <div class="mt-6 space-y-4 py-8 sm:mt-8">
+      <h4 class="text-lg font-semibold text-gray-200">Billing & Delivery information</h4>
+
+      <div class="flex justify-between">
+        <div class="flex flex-col gap-2">
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Date</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.date | date: 'dd.MM.yyyy' }}</dd>
+          </dl>
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Card number</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.creditCard }}</dd>
+          </dl>
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Issuer</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.creditCardIssuer }}</dd>
+          </dl>
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Address</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.address }}</dd>
+          </dl>
+        </div>
+        <div class="flex flex-col gap-2">
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Order Number</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.number }}</dd>
+          </dl>
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Name</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.name }}</dd>
+          </dl>
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Email</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.email }}</dd>
+          </dl>
+          <dl>
+            <dt class="text-base font-medium text-gray-200">Phone</dt>
+            <dd class="mt-1 text-base font-normal text-gray-400">{{ order.phone }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 sm:mt-8">
+      <div class="relative overflow-x-auto border-b border-gray-800">
+        <table class="w-full text-left font-medium text-gray-200 md:table-fixed">
+          <tbody class="divide-y divide-gray-800">
+            <tr>
+              <td class="whitespace-nowrap py-4 md:w-[384px]">Product name</td>
+              <td class="p-4 text-base font-normal text-gray-200">Amount</td>
+              <td class="p-4 text-right text-base text-gray-200">Discount</td>
+              <td class="p-4 text-right text-base text-gray-200">Final price</td>
+            </tr>
+            <tr *ngFor="let orderProduct of orderProducts">
+              <td class="whitespace-nowrap py-4 md:w-[384px]">
+                <div class="flex items-center gap-4">
+                  <a href="#" class="flex items-center aspect-square w-10 h-10 shrink-0">
+                    <img class="h-auto w-full max-h-full" [src]="orderProduct.product.images[0]"
+                      [alt]="orderProduct.product.name" />
+                  </a>
+                  <a href="#" class="hover:underline">{{ orderProduct.product.name }}</a>
+                </div>
+              </td>
+
+              <td class="p-4 text-base font-normal text-gray-200">{{ orderProduct.amount }} x {{
+                orderProduct.product.price }} €</td>
+
+              <td class="p-4 text-right text-base text-gray-200">{{ orderProduct.product.discount }} %</td>
+              <td class="p-4 text-right text-base font-bold text-gray-200">{{ orderProduct.finalPrice.toFixed(2) }} €</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 space-y-6">
+        <h4 class="text-xl font-semibold text-gray-900 dark:text-white">Order summary</h4>
+
+        <div class="space-y-4">
+          <div class="space-y-2">
+            <dl class="flex items-center justify-between gap-4">
+              <dt class="text-gray-500 dark:text-gray-400">Original price</dt>
+              <dd class="text-base font-medium text-gray-900 dark:text-white">{{ roundedOverAllPrice() }} €</dd>
+            </dl>
+
+            <dl class="flex items-center justify-between gap-4">
+              <dt class="text-gray-500 dark:text-gray-400">Price after discount</dt>
+              <dd class="text-base font-medium text-gray-900 dark:text-white">{{ roundedOverAllFinalPrice() }} €</dd>
+            </dl>
+
+            <dl class="flex items-center justify-between gap-4">
+              <dt class="text-gray-500 dark:text-gray-400">Savings</dt>
+              <dd class="text-base font-medium text-green-500">- {{ roundedSaving() }} € </dd>
+            </dl>
+
+            <dl class="flex items-center justify-between gap-4">
+              <dt class="text-gray-500 dark:text-gray-400">Tax</dt>
+              <dd class="text-base font-medium text-gray-900 dark:text-white">19%</dd>
+            </dl>
+          </div>
+
+          <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+            <dt class="text-lg font-bold text-gray-900 dark:text-white">Total</dt>
+            <dd class="text-lg font-bold text-gray-900 dark:text-white">{{ roundedFinal() }} € </dd>
+          </dl>
+        </div>
+
+        <div class="gap-4 sm:flex sm:items-center">
+          @if(!OrderUtil.isConfirmed(order.status)) {
+            <ad-ui-button class="w-full lg:w-auto" text="Confirm order" icon="save" />
+            <ad-ui-button class="w-full lg:w-auto"  text="Reject order" color="transparent-red" />
+          } 
+          @else {
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+              <span class="font-medium">Already confirmed</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

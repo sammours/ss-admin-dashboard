@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterOptionsFactory, UserFacade, UserModel, UserModelUtil } from '@ss-admin-dashboard/feature';
-import { Breadcrumb, FilterOptions, MenuItem, PaginatedList, clone } from '@ss-admin-dashboard/util-common';
+import { Breadcrumb, FilterOptions, PaginatedList, clone } from '@ss-admin-dashboard/util-common';
 import { BaseComponent } from '../../../base.component';
 import { takeUntil } from 'rxjs';
-import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'ad-user-list',
@@ -27,20 +26,12 @@ export class UserListComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
-    initFlowbite();
     this.getAll();
     this.facade.list$.pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {
         this.result = result
       }
     });
-  }
-
-  protected getMenuItem(id: string) {
-    return [
-      { text: 'Edit' + id, link: `/users/${id}`, icon: 'edit'},
-      { text: 'Delete', link: '', icon: 'delete'}
-    ] as MenuItem[];
   }
 
   protected onFilterChanged(value: string) {

@@ -2,7 +2,6 @@ export * from './lib/ui-common/menu/menu.component';
 export * from './lib/ui-common/icon/icon.component';
 export * from './lib/ui-common/paginator/paginator.component';
 export * from './lib/ui-common/breadcrumb/breadcrumb.component';
-export * from './lib/ui-common/dialog/dialog.component';
 export * from './lib/ui-common/button/button.component';
 export * from './lib/ui-common/rating/rating.component';
 export * from './lib/ui-common/carousel/carousel.component';

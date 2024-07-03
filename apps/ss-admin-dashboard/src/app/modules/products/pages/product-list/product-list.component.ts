@@ -22,7 +22,6 @@ export class ProductListComponent extends BaseComponent implements OnInit {
   protected filter = new FilterOptions();
   protected filterFactory = new FilterOptionsFactory();
   protected term = '';
-  protected openMenu = true;
 
   constructor(private readonly facade: ProductFacade,
     private readonly router: Router

@@ -13,20 +13,27 @@ import { CommentFacade } from "./comments/comment.facade";
 import { CommentEffects } from "./comments/comment.effects";
 import { commentReducer, commentReducerName } from "./comments/comment.reducers";
 
+import { OrderFacade } from "./orders/order.facade";
+import { OrderEffects } from "./orders/order.effects";
+import { orderReducer, orderReducerName } from "./orders/order.reducers";
+
 export const effects = [
     provideEffects(UserEffects),
     provideEffects(ProductEffects),
     provideEffects(CommentEffects),
+    provideEffects(OrderEffects),
 ];
 
 export const reducers = [
     provideState({ name: userReducerName, reducer: userReducer }),
     provideState({ name: productReducerName, reducer: productReducer }),
-    provideState({ name: commentReducerName, reducer: commentReducer })
+    provideState({ name: commentReducerName, reducer: commentReducer }),
+    provideState({ name: orderReducerName, reducer: orderReducer })
 ];
 
 export const facades = [
     UserFacade,
     ProductFacade,
-    CommentFacade
+    CommentFacade,
+    OrderFacade
 ]

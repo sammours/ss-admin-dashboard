@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommentFacade, CommentModel, ProductFacade, ProductModel, ProductUtil, ProductValidator, categories } from '@ss-admin-dashboard/feature';
 import { Breadcrumb, MenuItem, clone } from '@ss-admin-dashboard/util-common';
 import { BaseComponent } from '../../../../base.component';
 import { takeUntil } from 'rxjs';
+import { ProductPreviewComponent } from '../../components/product-preview/product-preview.component';
+import {
+  MatDialog,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'ad-product-edit',
@@ -26,7 +30,8 @@ export class ProductEditComponent extends BaseComponent implements OnInit {
     { text: 'Delete', link: '', icon: 'delete'},
     { text: 'Block user', link: '', icon: 'block'},
     { text: 'Visit profile', link: '', icon: 'user'},
-  ] as MenuItem[]
+  ] as MenuItem[];
+  readonly dialog = inject(MatDialog);
 
   constructor(private readonly facade: ProductFacade,
     private readonly commentFacade: CommentFacade,
@@ -55,6 +60,18 @@ export class ProductEditComponent extends BaseComponent implements OnInit {
       if (result) {
         this.comments = result;
       }
+    });
+  }
+
+  protected onPreviewClicked() {
+    this.dialog.open(ProductPreviewComponent, {
+      width: '1000px',
+      maxWidth: '1000px',
+      data: {
+        product: signal<ProductModel>(this.product),
+        comments: signal<CommentModel[]>(this.comments),
+      },
+      id: 'preview-dialog'
     });
   }
   

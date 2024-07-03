@@ -40,16 +40,16 @@
                     </span>
 
                     <span
-                        class="inline-flex items-center bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                        class="inline-flex items-center bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
                         *ngIf="!user.blocked && !user.active">
-                        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                        <span class="w-2 h-2 me-1 bg-gray-500 rounded-full"></span>
                         Inactive
                     </span>
 
                     <span
-                        class="inline-flex items-center bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                        class="inline-flex items-center bg-red-900 text-red-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
                         *ngIf="user.blocked">
-                        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                        <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
                         Blocked
                     </span>
             </div>
@@ -141,7 +141,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-row-reverse w-full mt-8">
+            <div class="flex flex-row-reverse w-full mt-8 gap-2">
                 <ad-ui-button text="Save" icon="save" color="green" [disabled]="!validator.isValid()" />
                 <ad-ui-button text="Unblock" icon="unlock" *ngIf="UserModelUtil.userStatus(user) === 'blocked'" />
                 <ad-ui-button text="Block" icon="lock" *ngIf="UserModelUtil.userStatus(user) !== 'blocked'" />

@@ -19,6 +19,7 @@ import {
 import { UtilCommonModule } from '@ss-admin-dashboard/util-common';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { FormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     PaginatorComponent,
     ButtonComponent,
     BreadcrumbComponent,
+    MatInputModule,
     LineComponent,
     HighlightPipe,
   ],

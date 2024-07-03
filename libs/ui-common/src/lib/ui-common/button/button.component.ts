@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IconType } from '@ss-admin-dashboard/util-common';
 import { IconComponent } from '../icon/icon.component';
 
-type ColorType = 'green' | 'gray';
+type ColorType = 'green' | 'gray' | 'red' | 'transparent-red';
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule, IconComponent],

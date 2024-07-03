@@ -17,3 +17,8 @@ export const selectProduct = createSelector(
   selectFeature,
   (state: ProductState) => state.item
 );
+
+export const selectProducts = createSelector(
+  selectFeature,
+  (state: ProductState) => state.items
+);

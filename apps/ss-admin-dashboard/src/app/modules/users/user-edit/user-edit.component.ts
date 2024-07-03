@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserFacade, UserModel, UserModelUtil, UserValidator } from '@ss-admin-dashboard/feature';
 import { Breadcrumb, clone } from '@ss-admin-dashboard/util-common';
@@ -12,6 +12,7 @@ import { DateTime } from 'luxon';
   styleUrl: './user-edit.component.scss',
 })
 export class UserEditComponent extends BaseComponent implements OnInit {
+  @Input() id = '';
   protected user = new UserModel();
   protected UserModelUtil = UserModelUtil;
 
@@ -35,13 +36,8 @@ export class UserEditComponent extends BaseComponent implements OnInit {
   override ngOnInit(): void {
     super.ngOnInit();
 
-    this.route.paramMap.subscribe(params => {
-      if (params.has('id')) {
-        this.user.id = params.get('id') ?? '';
-      }
-
-      this.getById();
-    })
+    this.user.id = this.id;
+    this.getById();
 
     this.facade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {

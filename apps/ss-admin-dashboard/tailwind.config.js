@@ -16,6 +16,7 @@ module.exports = {
       }
     },
   },
+  important: true,
   darkMode: false,
   plugins: [
     require('flowbite/plugin') // add this line

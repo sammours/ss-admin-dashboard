@@ -1,5 +1,5 @@
 
-import { createActionGroup, props } from '@ngrx/store';
+import { createAction, createActionGroup, props } from '@ngrx/store';
 import { ProductModel } from '../../models/product.model';
 import { FilterOptions, PaginatedList } from '@ss-admin-dashboard/util-common';
 
@@ -20,5 +20,14 @@ export const ProductActions = {
         '[Product] Get by id success': props<{ payload: ProductModel | undefined }>(),
         '[Product] Get by id error': props<{ error: string }>(),
       },
-    })    
+    }),
+    getByIds: createActionGroup({
+      source: source,
+      events: {
+        '[Product] Get by ids loading': props<{ ids: string[] }>(),
+        '[Product] Get by ids success': props<{ payload: ProductModel[] | undefined }>(),
+        '[Product] Get by ids error': props<{ error: string }>(),
+      },
+    }),
+    reset: createAction('[Product] Reset')
 }

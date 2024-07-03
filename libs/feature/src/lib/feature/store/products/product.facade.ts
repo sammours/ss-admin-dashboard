@@ -10,6 +10,7 @@ Injectable({
 export class ProductFacade {
     private readonly store = inject(Store);
     public list$ = this.store.select(selectors.selectProductList);
+    public items$ = this.store.select(selectors.selectProducts);
     public product$ = this.store.select(selectors.selectProduct);
     public isLoading$ = this.store.select(selectors.selectIsLoading);
 
@@ -19,5 +20,13 @@ export class ProductFacade {
 
     public getById(id: string) {
         this.store.dispatch(ProductActions.getById["[Product]GetByIdLoading"]({ id }));
+    }
+
+    public getByIds(ids: string[]) {
+        this.store.dispatch(ProductActions.getByIds["[Product]GetByIdsLoading"]({ ids }));
+    }
+
+    public reset() {
+        this.store.dispatch(ProductActions.reset());
     }
 }

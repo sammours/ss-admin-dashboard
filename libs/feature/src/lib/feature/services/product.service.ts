@@ -38,6 +38,13 @@ export class ProductsService {
     );
   }
 
+  public getByIds(ids: string[]) {
+    return this.http.get('/assets/mockData/product-mock.json').pipe(
+      map((result) => result as ProductModel[]),
+      map((result) => result.filter(x => ids.contains(id => id === x.id))),
+    );
+  }
+
   private filterResult(filterList: Filter[], result: ProductModel[])  {
     filterList.forEach(filter => {
       switch (filter.field) {
