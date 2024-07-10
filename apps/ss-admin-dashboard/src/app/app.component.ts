@@ -11,6 +11,7 @@ import {
   HeaderComponent,
   SidebarComponent,
   categories,
+  mailFolders,
   orderStatus,
 } from '@ss-admin-dashboard/feature';
 import { faker } from '@faker-js/faker';
@@ -30,21 +31,40 @@ export class AppComponent implements OnInit {
   public showSidebar = signal(false);
 
   constructor() {
+    // // Add Users
+    // const users = [];
+    // for(let i = 0; i < 100; i++) {
+    //   users.push(this.generateUserFaker());
+    // }
+    // console.log(JSON.stringify(users));
+
+    // // Add Products
     // const products = [];
     // for(let i = 0; i < productIds.length; i++) {
     //   products.push(this.generateProductFaker(productIds[i]));
     // }
+    // console.log(JSON.stringify(products));
+
+    // // Add Comments
     // const comments = [];
     // for(let i = 0; i < 1000; i++) {
     //   comments.push(this.generateComments(productIds));
     // }
+    // console.log(JSON.stringify(comments));
+
+    // // Add Orders
     // const orders = [];
     // for(let i = 0; i < 100; i++) {
     //   orders.push(this.generateOrders(productIds));
     // }
-    // console.log(JSON.stringify(products));
-    // console.log(JSON.stringify(comments));
     // console.log(JSON.stringify(orders));
+
+    // // Add Mails
+    // const mails = [];
+    // for(let i = 0; i < 100; i++) {
+    //   mails.push(this.generateMails());
+    // }
+    // console.log(JSON.stringify(mails));
   }
 
   public ngOnInit(): void {
@@ -58,7 +78,7 @@ export class AppComponent implements OnInit {
     ] as MenuItem[];
   }
 
-  generateUserFaker() {
+  private generateUserFaker() {
     return {
       id: faker.string.uuid(),
       firstName: faker.person.firstName(),
@@ -77,7 +97,21 @@ export class AppComponent implements OnInit {
     };
   }
 
-  generateProductFaker(productId: string) {
+  private generateMails() {
+    return {
+      id: faker.string.uuid(),
+      sender: faker.person.fullName(),
+      subject: faker.lorem.sentence(),
+      body: this.getBody(),
+      folder: mailFolders[Math.floor(Math.random() * mailFolders.length)],
+      date: faker.date.past(),
+      avatar: faker.image.avatar(),
+      isRead: faker.datatype.boolean(),
+      from: faker.internet.email()
+    };
+  }
+
+  private generateProductFaker(productId: string) {
     return {
       id: productId,
       name: faker.commerce.productName(),
@@ -97,7 +131,7 @@ export class AppComponent implements OnInit {
     };
   }
 
-  generateComments(productIds: string[]) {
+  private generateComments(productIds: string[]) {
     return {
       id: faker.string.uuid(),
       productId: productIds[Math.floor(Math.random() * productIds.length)],
@@ -109,7 +143,7 @@ export class AppComponent implements OnInit {
     };
   }
 
-  generateOrders(productIds: string[]) {
+  private generateOrders(productIds: string[]) {
     const products = [];
     for (let i = 0; i < Math.floor(Math.random() * 5); i++) {
       products.push({
@@ -133,4 +167,15 @@ export class AppComponent implements OnInit {
       createdAt: faker.date.past(),
     };
   }
+
+  private getBody(): string {
+    const sentences = [
+      `<p>${faker.lorem.paragraph({ min: 10, max: 20 })}</p>`,
+      '<br />',
+      '<br />',
+      `<i>${faker.lorem.paragraph({ min: 20, max: 30 })}</i>`,
+    ];
+    return sentences.join(' ');
+}
+
 }

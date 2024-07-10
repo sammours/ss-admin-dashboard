@@ -1,0 +1,16 @@
+<div class="items-center justify-between p-4 bg-gray-800 border border-gray-700 rounded-lg shadow-sm sm:flex sm:p-6">
+    <div class="w-full">
+        <h2 class="text-gray-400">
+            New products
+        </h2>
+        <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl dark:text-white">{{ newProductsCount() }}</span>
+        <p class="flex items-center text-base font-normal text-gray-500 dark:text-gray-400">
+            <span class="flex items-center mr-1.5 text-sm text-green-500 dark:text-green-400">
+                <ad-ui-icon icon="arrow-up" color="light-blue" />
+                {{ percent() }}%
+            </span>
+            Since last six months
+        </p>
+    </div>
+
+</div>

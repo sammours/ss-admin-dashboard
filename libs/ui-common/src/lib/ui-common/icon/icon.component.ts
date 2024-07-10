@@ -47,7 +47,11 @@ import {
   heroArrowUp,
   heroChatBubbleOvalLeft,
   heroPaperAirplane,
-  heroInbox
+  heroInbox,
+  heroArrowLeftCircle,
+  heroArrowRightCircle,
+  heroPrinter,
+  heroPaperClip
 } from '@ng-icons/heroicons/outline';
 
 import { IconType } from '@ss-admin-dashboard/util-common';
@@ -121,6 +125,10 @@ export class IconComponent implements OnInit {
       case 'chat': this.iconSvg = heroChatBubbleOvalLeft; break;
       case 'send': this.iconSvg = heroPaperAirplane; break;
       case 'inbox': this.iconSvg = heroInbox; break;
+      case 'circle-arrow-left': this.iconSvg = heroArrowLeftCircle; break;
+      case 'circle-arrow-right': this.iconSvg = heroArrowRightCircle; break;
+      case 'printer': this.iconSvg = heroPrinter; break;
+      case 'attachment': this.iconSvg = heroPaperClip; break;
 
       default: this.iconSvg = heroHome; break;
     }

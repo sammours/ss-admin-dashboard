@@ -23,6 +23,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { OrderEditComponent } from './pages/order-edit/order-edit.component';
+import { OrdersTableComponent } from '@ss-admin-dashboard/feature';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { OrderEditComponent } from './pages/order-edit/order-edit.component';
     LineComponent,
     MatDatepickerModule,
     MatFormFieldModule,
+    OrdersTableComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [provideNativeDateAdapter()],

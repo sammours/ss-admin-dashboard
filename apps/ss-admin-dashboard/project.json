@@ -22,9 +22,12 @@
             "input": "apps/ss-admin-dashboard/public",
             "output": "assets"
           },
-          "apps/ss-admin-dashboard/src/assets",
+          "apps/ss-admin-dashboard/src/assets"
         ],
-        "styles": ["apps/ss-admin-dashboard/src/styles.scss"],
+        "styles": [
+          "apps/ss-admin-dashboard/src/styles.scss"
+          // "node_modules/apexcharts/dist/apexcharts.min.js"
+        ],
         "scripts": []
       },
       "configurations": {

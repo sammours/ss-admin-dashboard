@@ -26,6 +26,7 @@ export class UserListComponent extends BaseComponent implements OnInit {
   }
 
   override ngOnInit(): void {
+    super.ngOnInit();
     this.getAll();
     this.facade.list$.pipe(takeUntil(this.unsubscribe$)).subscribe((result) => {
       if (result) {

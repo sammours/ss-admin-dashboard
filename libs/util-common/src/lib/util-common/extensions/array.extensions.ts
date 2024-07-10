@@ -3,6 +3,7 @@ interface Array<T> {
     addOrUpdateRange(item: Array<T>): this;
     firstOrDefault(predicate: (item: T) => boolean): T;
     where(predicate: (item: T) => boolean): T[];
+    count(predicate: (item: T) => boolean): number;
     remove(item: T): boolean;
     removeRange(items: T[]): void;
     add(item: T): void;
@@ -54,6 +55,10 @@ interface Array<T> {
   Array.prototype.where = function<T>(predicate: (item: T) => boolean): Array<T> {
     const result = (this as Array<T>).filter(x => predicate(x));
     return result ? result : new Array<T>();
+  };
+
+  Array.prototype.count = function<T>(predicate: (item: T) => boolean): number {
+    return (this as Array<T>).where(x => predicate(x)).length;
   };
   
   Array.prototype.remove = function<T>(item: T): boolean {

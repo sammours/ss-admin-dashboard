@@ -17,8 +17,8 @@ module.exports = {
     },
   },
   important: true,
-  darkMode: false,
+  darkMode: 'media',
   plugins: [
-    require('flowbite/plugin') // add this line
+    require('flowbite/plugin')
   ],
 };

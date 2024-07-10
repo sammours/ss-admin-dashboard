@@ -1,1 +1,141 @@
-Inbox-works
+<div class="flex flex-col">
+    <div class="flex flex-col md:flex-row overflow-x-hidden">
+        <div class="md:w-64 md:p-6 bg-gray-900 overflow-y-auto">
+            <nav class="max-md:hidden">
+                <h2 class="font-semibold text-gray-200 uppercase tracking-wide">MailBox</h2>
+                <div class="mt-3 cursor-pointer">
+                    <a class="py-2 px-3 flex items-center justify-between bg-gray-900 rounded-md hover:bg-gray-700"
+                        [ngClass]="{'bg-gray-700': activeFolder() === 'inbox', 'bg-gray-900': activeFolder() !== 'inbox'}"
+                        (click)="onFolderChanged('inbox')">
+                        <span class=" text-gray-200">Inbox</span>
+                        <span
+                            class="inline-block px-4 py-1 text-center py-1 leading-none text-gray-200 bg-gray-600 rounded-full">{{ result.inboxCount }}</span>
+                    </a>
+                </div>
+                <div class="mt-3 cursor-pointer">
+                    <a class="py-2 px-3 flex items-center justify-between bg-gray-900 rounded-md hover:bg-gray-700"
+                        [ngClass]="{'bg-gray-700': activeFolder() === 'junk', 'bg-gray-900': activeFolder() !== 'junk'}"
+                        (click)="onFolderChanged('junk')">
+                        <span class=" text-gray-200">Junk</span>
+                        <span
+                            class="inline-block px-4 py-1 text-center py-1 leading-none text-gray-200 bg-gray-600 rounded-full">{{ result.junkCount }}</span>
+                    </a>
+                </div>
+                <div class="mt-3 cursor-pointer">
+                    <a class="py-2 px-3 flex items-center justify-between bg-gray-900 rounded-md hover:bg-gray-700"
+                        [ngClass]="{'bg-gray-700': activeFolder() === 'flagged', 'bg-gray-900': activeFolder() !== 'flagged'}"
+                        (click)="onFolderChanged('flagged')">
+                        <span class=" text-gray-200">Flagged</span>
+                        <span
+                            class="inline-block px-4 py-1 text-center py-1 leading-none text-gray-200 bg-gray-600 rounded-full">{{ result.flaggedCount }}</span>
+                    </a>
+                </div>
+                <div class="mt-3 cursor-pointer">
+                    <a class="py-2 px-3 flex items-center justify-between rounded-md hover:bg-gray-700"
+                        [ngClass]="{'bg-gray-700': activeFolder() === 'drafts', 'bg-gray-900': activeFolder() !== 'drafts'}"
+                        (click)="onFolderChanged('drafts')">
+                        <span class=" text-gray-200">Drafts</span>
+                        <span
+                            class="inline-block px-4 py-1 text-center py-1 leading-none text-gray-200 bg-gray-600 rounded-full">{{ result.draftsCount }}</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="md:hidden w-full">
+                <button id="filter-dropdown-button" data-dropdown-toggle="filter-dropdown" class="inline-flex items-center uppercase gap-2 w-full py-2 px-4 text-center text-gray-400 bg-gray-800 rounded-lg md:mb-0 focus:ring-0 focus:outline-none" type="button">
+                    <ad-ui-icon icon="inbox" color="gray" />
+                    MailBox
+                </button>
+                    
+                <div id="filter-dropdown" class="z-10 hidden w-full px-4 py-2 bg-gray-900 rounded-lg shadow-lg text-gray-400">
+                    <ul class="text-gray-200 rounded-lg">
+                        <li class="p-2" [ngClass]="{'bg-gray-700': activeFolder() === 'inbox', 'bg-gray-900': activeFolder() !== 'inbox'}" (click)="onFolderChanged('inbox')">Inbox</li>
+                        <li class="p-2" [ngClass]="{'bg-gray-700': activeFolder() === 'junk', 'bg-gray-900': activeFolder() !== 'junk'}" (click)="onFolderChanged('junk')">Junk</li>
+                        <li class="p-2" [ngClass]="{'bg-gray-700': activeFolder() === 'flagged', 'bg-gray-900': activeFolder() !== 'flagged'}" (click)="onFolderChanged('flagged')">Flagged</li>
+                        <li class="p-2" [ngClass]="{'bg-gray-700': activeFolder() === 'drafts', 'bg-gray-900': activeFolder() !== 'drafts'}" (click)="onFolderChanged('drafts')">Drafts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-y-auto overflow-hidden">
+            <div class="py-2 flex items-center justify-between">
+                <button class="text-sm flex items-center text-gray-200" (click)="onSortClicked()">
+                    <span>Sorted by Date</span>
+                    <ad-ui-icon icon="sort" size="m" color="white"></ad-ui-icon>
+                </button>
+            </div>
+            <div class="pt-3 pb-4">
+                <a class="block py-3 border-t border-gray-600/50 hover:bg-gray-700 cursor-pointer" *ngFor="let mail of result.items"
+                    [ngClass]="{ 'bg-gray-700': this.activeEmail().id === mail.id,
+                                'bg-gray-800': this.activeEmail().id !== mail.id 
+                            }"
+                    (click)="onEmailSelected(mail)">
+                    <div class="px-4 py-1 flex justify-between">
+                        <span class="text-sm text-gray-200">{{ mail.sender}}</span>
+                        <span class="text-sm text-gray-400">{{ mail.date | writtenDate }}</span>
+                    </div>
+                    <span class="text-sm text-gray-200 px-4 py-1">{{ mail.subject | truncate: 40}}</span>
+                    <div class="px-4 py-1 text-sm text-gray-400 text-wrap" innerHTML="{{mail.body | truncate: 60}}">
+                    </div>
+                </a>
+
+                <span *ngIf="!hasReachedMax" class="text-gray-200 hover:cursor-pointer hover:underline" (click)="onLoadMoreClicked()">Load more ...</span>
+            </div>
+        </div>
+
+        <div class="flex-1 py-3 w-auto inline-block overflow-y-auto">
+            @if(activeEmail().id !== '') {
+            <section class="w-full px-4 flex flex-col">
+                <div class="flex flex-col md:flex-row justify-between items-center h-24">
+                    <div class="flex items-center px-6 py-4 whitespace-nowrap ">
+                        <img class="w-10 h-10 rounded-full" [src]="activeEmail().avatar" [alt]="activeEmail().sender">
+                        <div class="ps-3">
+                            <div class="flex items-center text-base text-gray-200 font-semibold">{{ activeEmail().sender }}</div>
+                            <div class="font-normal text-gray-400">{{ activeEmail().from }} </div>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="flex text-gray-400 space-x-4">
+                            <li class="w-6 h-6">
+                                <ad-ui-icon icon="circle-arrow-left" size="l" color="light-blue" class="cursor-pointer" />
+                            </li>
+                            <li class="w-6 h-6">
+                                <ad-ui-icon icon="circle-arrow-right" size="l" color="light-blue" class="cursor-pointer" />
+                            </li>
+
+                            <li class="w-6 h-6">
+                                <ad-ui-icon icon="printer" size="l" color="light-blue" class="cursor-pointer" />
+                            </li>
+                            <li class="w-6 h-6">
+                                <ad-ui-icon icon="delete" size="l" color="light-blue" class="cursor-pointer" />
+                            </li>
+                            <li class="w-6 h-6">
+                                <ad-ui-icon icon="bookmark" size="l" color="light-blue" class="cursor-pointer" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <ad-ui-line margin="s" />
+
+                <section>
+                    <h1 class="font-bold text-2xl text-gray-300">{{ activeEmail().subject }}</h1>
+                    <div class="mt-8 text-gray-400 leading-7 tracking-wider" [innerHTML]="activeEmail().body"></div>
+                </section>
+                <section class="mt-6">
+                    <textarea class="w-full bg-gray-800 text-gray-200 p-2 rounded-l focus:outline-none focus:ring-0" placeholder="Type your reply here..." rows="3"></textarea>
+                    <div class="flex items-center justify-between p-2">
+                        <label for="dropzone-file">
+                            <input id="dropzone-file" type="file" class="hidden" />
+                            <p class="h-6 w-6 text-gray-400">
+                                <ad-ui-icon icon="attachment" size="l" color="light-blue" class="cursor-pointer" />
+                            </p>
+                        </label>
+                        <ad-ui-button icon="send" text="Replay" />
+                    </div>
+                </section>
+            </section>
+            }
+        </div>
+    </div>
+</div>

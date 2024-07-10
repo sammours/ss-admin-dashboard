@@ -1,0 +1,18 @@
+<div class="p-4 mb-4 space-y-6 bg-gray-800 border border-gray-700 rounded-lg shadow-sm sm:p-6">
+    <h3 class="text-gray-200">Top active users</h3>
+    <ul class="max-w-md overflow-y-auto h-[34rem]">
+        <li *ngFor="let user of users(); let last = last">
+            <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                    <img class="w-8 h-8 rounded-full" [src]="user.avatar" [alt]="UserModelUtil.fullName(user)">
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-200 truncate">{{UserModelUtil.fullName(user)}}</p>
+                    <p class="text-sm text-gray-400 truncate">{{ user.email }}</p>
+                </div>
+            </div>
+            <ad-ui-line margin="s" *ngIf="!last" />
+        </li>
+    </ul>
+
+</div>

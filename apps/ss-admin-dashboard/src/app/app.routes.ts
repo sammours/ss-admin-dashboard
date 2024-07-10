@@ -5,6 +5,11 @@ export const routes: Route[] = [
     path: '',
     children: [
       {
+        path: '',
+        loadChildren: () =>
+          import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
+      },
+      {
         path: 'users',
         loadChildren: () =>
           import('./modules/users/users.module').then((m) => m.UsersModule),
@@ -23,7 +28,7 @@ export const routes: Route[] = [
         path: 'inbox',
         loadChildren: () =>
           import('./modules/inbox/inbox.module').then((m) => m.InboxModule),
-      },
+      }
     ],
   },
 ];

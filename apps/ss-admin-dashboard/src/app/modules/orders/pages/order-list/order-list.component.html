@@ -68,50 +68,7 @@
                     </div>
                 </div>
 
-                <div class="mt-6 flow-root sm:mt-8" *ngFor="let order of result.items">
-                    <div>
-                        <div class="flex flex-wrap items-center gap-y-4 py-6">
-                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                                <dt class="text-gray-300">Order Number:</dt>
-                                <dd class="mt-1.5 text-base font-semibold text-white">
-                                    <a href="#" class="hover:underline">{{ order.number }}</a>
-                                </dd>
-                            </dl>
-
-                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                                <dt class="text-gray-300">Date:</dt>
-                                <dd class="mt-1.5 text-base font-semibold text-white">{{ order.date | date:
-                                    'dd.MM.yyyy'}}</dd>
-                            </dl>
-
-                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                                <dt class="text-gray-300">Price:</dt>
-                                <dd class="mt-1.5 text-base font-semibold text-white">{{ getTotalPrice(order)}}</dd>
-                            </dl>
-
-                            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                                <dt class="text-gray-300">Status:</dt>
-                                <dd class="me-2 mt-1.5 rounded px-2.5 py-0.5 flex gap-1 items-center w-fit" [ngClass]="{ 
-                                        'bg-blue-900 text-blue-300 border border-blue-300': OrderUtil.isPreOrder(order.status),
-                                        'bg-green-900 text-green-300 border border-green-300': OrderUtil.isConfirmed(order.status),
-                                        'bg-yellow-900 text-yellow-300 border border-yellow-300':  OrderUtil.isInTransit(order.status),
-                                        'bg-red-900 text-red-300 border border-red-300':  OrderUtil.isCancelled(order.status),
-                                    }" text-red-300 bg-red-100>
-                                    <ad-ui-icon [icon]="OrderUtil.getIcon(order.status)" color="light-blue" />
-                                    {{ order.status }}
-                                </dd>
-                            </dl>
-
-                            <div class="w-full grid grid-cols-2 lg:flex lg:w-72 lg:items-center lg:justify-end gap-4">
-                                <ad-ui-button class="w-full lg:w-auto" text="View details"
-                                    (click)="onEditClicked(order.id)" />
-                                <ad-ui-button class="w-full lg:w-auto" *ngIf="!OrderUtil.isConfirmed(order.status)"
-                                    text="Cancel order" color="transparent-red" />
-                            </div>
-                        </div>
-                    </div>
-                    <ad-ui-line margin="s" />
-                </div>
+                <ad-orders-table [items]="result.items" (editClick)="onEditClicked($event)" />
 
                 <div class="flex items-center w-full justify-evenly">
                     <ad-ui-paginator [currentPage]="filter.skip / filter.take" [length]="result.totalCount"

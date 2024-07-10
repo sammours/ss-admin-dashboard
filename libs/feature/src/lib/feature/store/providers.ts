@@ -17,23 +17,30 @@ import { OrderFacade } from "./orders/order.facade";
 import { OrderEffects } from "./orders/order.effects";
 import { orderReducer, orderReducerName } from "./orders/order.reducers";
 
+import { MailFacade } from "./mails/mail.facade";
+import { MailEffects } from "./mails/mail.effects";
+import { mailReducer, mailReducerName } from "./mails/mail.reducers";
+
 export const effects = [
     provideEffects(UserEffects),
     provideEffects(ProductEffects),
     provideEffects(CommentEffects),
     provideEffects(OrderEffects),
+    provideEffects(MailEffects),
 ];
 
 export const reducers = [
     provideState({ name: userReducerName, reducer: userReducer }),
     provideState({ name: productReducerName, reducer: productReducer }),
     provideState({ name: commentReducerName, reducer: commentReducer }),
-    provideState({ name: orderReducerName, reducer: orderReducer })
+    provideState({ name: orderReducerName, reducer: orderReducer }),
+    provideState({ name: mailReducerName, reducer: mailReducer })
 ];
 
 export const facades = [
     UserFacade,
     ProductFacade,
     CommentFacade,
-    OrderFacade
+    OrderFacade,
+    MailFacade
 ]

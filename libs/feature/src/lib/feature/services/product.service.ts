@@ -22,10 +22,14 @@ export class ProductsService {
         const result = new PaginatedList<ProductModel>();
         const filtered = this.filterResult(filter.filter, list);
         result.totalCount = filtered.length;
-        result.items = this.sortResult(filter.sort, filtered).slice(
-          filter.skip,
-          filter.skip + filter.take
-        );
+        if (filter.take === -1) {
+          result.items = this.sortResult(filter.sort, filtered);
+        } else {
+          result.items = this.sortResult(filter.sort, filtered).slice(
+            filter.skip,
+            filter.skip + filter.take
+          );
+        }
         return result;
       })
     );

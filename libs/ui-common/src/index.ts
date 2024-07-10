@@ -8,4 +8,5 @@ export * from './lib/ui-common/carousel/carousel.component';
 export * from './lib/ui-common/line/line.component';
 export * from './lib/ui-common/pipes/highlight.pipe';
 export * from './lib/ui-common/pipes/truncate.pipe';
+export * from './lib/ui-common/pipes/written-date.pipe';
 export * from './lib/ui-common/directives/tooltip.directive';
