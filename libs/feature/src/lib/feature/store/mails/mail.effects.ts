@@ -24,4 +24,15 @@ export class MailEffects {
         ))
       )
     );
+
+    getLastEmail$ = createEffect(() => this.actions$.pipe(
+      ofType(actions.getLastEmail['[Mail]GetLastEmailLoading']),
+      debounceTime(300),
+      switchMap(() => this.service.getLastEmail()
+        .pipe(
+          map(result => actions.getLastEmail['[Mail]GetLastEmailSuccess']({ payload: result })),
+          catchError(() => of(actions.getLastEmail['[Mail]GetLastEmailError']({ error: 'error has occur' }))),
+        ))
+      )
+    );
 }

@@ -1,0 +1,9 @@
+<div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+    <div class="w-64">
+        <p class="text-gray-400 text-xl">
+            Our target is to sell 1000 products by the end of the year. We are very proud to announce that we reached {{progress()}}%
+        </p>
+    </div>
+
+    <apx-chart class="flex-1" [series]="series" [chart]="chart" [labels]="labels"></apx-chart>
+</div>

@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { dashboardRoutes } from "./dashboard.routes";
-import { BreadcrumbComponent, ButtonComponent, CarouselComponent, IconComponent, LineComponent, MenuComponent, PaginatorComponent } from "@ss-admin-dashboard/ui-common";
+import { BreadcrumbComponent, ButtonComponent, CarouselComponent, IconComponent, LineComponent, MenuComponent, PaginatorComponent, TruncatePipe } from "@ss-admin-dashboard/ui-common";
 import { UtilCommonModule } from "@ss-admin-dashboard/util-common";
 import { FormsModule } from "@angular/forms";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
@@ -12,6 +12,8 @@ import { DashboardOrderOverviewComponent } from "./components/dashboard-order-ov
 import { DashboardLastOrdersComponent } from "./components/dashboard-last-orders/dashboard-last-orders.component";
 import { OrdersTableComponent } from "@ss-admin-dashboard/feature";
 import { DashboardProductStatsComponent } from "./components/dashboard-product-stats/dashboard-product-stats.component";
+import { DashboardLastEmailComponent } from "./components/dashboard-last-email/dashboard-last-email.component";
+import { DashboardTargetStatsComponent } from "./components/dashboard-target-stats/dashboard-target-stats.component";
 
 @NgModule({
     imports: [
@@ -27,9 +29,12 @@ import { DashboardProductStatsComponent } from "./components/dashboard-product-s
       CarouselComponent,
       NgApexchartsModule,
       LineComponent,
+      TruncatePipe,
       OrdersTableComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    declarations: [DashboardComponent, DashboardUsersComponent, DashboardOrderOverviewComponent, DashboardLastOrdersComponent, DashboardProductStatsComponent]
+    declarations: [DashboardComponent, DashboardUsersComponent, DashboardOrderOverviewComponent, DashboardLastOrdersComponent, DashboardProductStatsComponent,
+      DashboardLastEmailComponent, DashboardTargetStatsComponent
+    ]
   })
   export class DashboardModule { }

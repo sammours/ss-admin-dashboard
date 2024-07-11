@@ -35,6 +35,15 @@ export class MailsService {
     );
   }
 
+  public getLastEmail() {
+    return this.http.get('/assets/mockData/mail-mock.json').pipe(
+      map((result) => result as MailModel[]),
+      map((list) => {
+        return list.orderByDescending((x) => x.date)[0];
+      })
+    );
+  }
+
   private filterResult(filterList: Filter[], result: MailModel[])  {
     filterList.forEach(filter => {
       switch (filter.field) {

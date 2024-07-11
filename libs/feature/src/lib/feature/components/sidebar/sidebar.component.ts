@@ -25,7 +25,6 @@ export class SidebarComponent {
     { verticalPosition: 'top', text: 'Product management', link: '', icon: 'product', children: [
       { text: 'Product overview', link: '/products', icon: 'product' },
       { text: 'Order overview', link: '/orders', icon: 'cart' },
-      { text: 'Shipping overview', link: '', icon: 'product' },
     ] },
     { verticalPosition: 'top', text: 'Inbox', link: '/inbox', icon: 'inbox'},
     { verticalPosition: 'bottom', text: 'Logout', link: '', icon: 'logout'},

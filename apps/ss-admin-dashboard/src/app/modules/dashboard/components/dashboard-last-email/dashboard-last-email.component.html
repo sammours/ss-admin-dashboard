@@ -1,0 +1,16 @@
+<div class="flex flex-col p-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center px-6 py-4 whitespace-nowrap ">
+            <img class="w-10 h-10 rounded-full" [src]="email()?.avatar" [alt]="email()?.sender">
+            <div class="ps-3">
+                <div class="flex items-center text-base text-gray-200 font-semibold">{{ email()?.sender }}</div>
+                <div class="font-normal text-gray-400">{{ email()?.from }} </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <h1 class="font-bold text-2xl text-gray-300">{{ email()?.subject }}</h1>
+        <div class="mt-8 text-gray-400 leading-7 tracking-wider" innerHTML="{{ email()?.body | truncate: 500 }}"></div>
+    </section>
+</div>

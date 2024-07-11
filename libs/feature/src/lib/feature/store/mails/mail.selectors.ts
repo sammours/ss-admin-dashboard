@@ -7,3 +7,8 @@ export const selectMailList = createSelector(
   selectFeature,
   (state: MailState) => state.list
 );
+
+export const selectLastMail = createSelector(
+  selectFeature,
+  (state: MailState) => state.item
+);
